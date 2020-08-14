@@ -12,8 +12,7 @@ namespace finalProject_2020_q3.code
         }
         public override Cell ValidMovements()
         {
-            // implemtns movement
-            return null;
+            throw new NotImplementedException();
         }
 
         public Piece Promote(PiceType piceType)

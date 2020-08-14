@@ -4,7 +4,13 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    class Knight
+    class Knight: Piece
     {
+        public Knight (Color color, Cell position) : base(color, position) { }
+
+        public override Cell ValidMovements()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

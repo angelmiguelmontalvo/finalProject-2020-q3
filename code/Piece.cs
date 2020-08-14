@@ -9,7 +9,7 @@ namespace finalProject_2020_q3.code
         private Color color;
         private Cell position;
 
-        public Piece (Color color, Cell position)
+        public Piece(Color color, Cell position)
         {
             this.color = color;
             this.position = position;
