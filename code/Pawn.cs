@@ -25,7 +25,7 @@ namespace finalProject_2020_q3.code
             throw new NotImplementedException();
         }
 
-        public Piece Promote(PieceType piceType)
+        public Piece Promote(PieceType pieceType)
         {
             throw new NotImplementedException();
         }

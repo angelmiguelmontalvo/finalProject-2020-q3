@@ -7,6 +7,6 @@ namespace finalProject_2020_q3.code
 {
     public interface IPromotion
     {
-        public Piece Promote(PieceType piceType);
+        public Piece Promote(PieceType pieceType);
     }
 }
