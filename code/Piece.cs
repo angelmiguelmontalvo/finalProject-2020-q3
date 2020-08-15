@@ -6,17 +6,17 @@ namespace finalProject_2020_q3.code
 {
     public abstract class Piece
     {
-        private Color color;
-        private Cell position;
+        private Color Color;
+        private Cell Position;
 
         public Piece(Color color, Cell position)
         {
-            this.color = color;
-            this.position = position;
+            this.Color = color;
+            this.Position = position;
         }
 
         public abstract Cell ValidMovements();
         public abstract Cell AttackMovements();
-        public abstract Cell captureFreeCells();
-            }
+        public abstract Cell CaptureFreeCells();
+    }
 }

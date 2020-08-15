@@ -1,6 +1,6 @@
 ﻿namespace finalProject_2020_q3.code
 {
-    public enum PiceType
+    public enum PieceType
     {
         PAWN,
         ROCK,

@@ -20,12 +20,12 @@ namespace finalProject_2020_q3.code
             throw new NotImplementedException();
         }
 
-        public override Cell captureFreeCells()
+        public override Cell CaptureFreeCells()
         {
             throw new NotImplementedException();
         }
 
-        public Piece Promote(PiceType piceType)
+        public Piece Promote(PieceType piceType)
         {
             throw new NotImplementedException();
         }
