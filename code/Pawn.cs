@@ -15,10 +15,21 @@ namespace finalProject_2020_q3.code
             throw new NotImplementedException();
         }
 
+        public override Cell AttackMovements()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Cell captureFreeCells()
+        {
+            throw new NotImplementedException();
+        }
+
         public Piece Promote(PiceType piceType)
         {
             throw new NotImplementedException();
         }
+
     }
 
 }

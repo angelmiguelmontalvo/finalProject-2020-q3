@@ -16,6 +16,7 @@ namespace finalProject_2020_q3.code
         }
 
         public abstract Cell ValidMovements();
-                
-    }
+        public abstract Cell AttackMovements();
+        public abstract Cell captureFreeCells();
+            }
 }
