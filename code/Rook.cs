@@ -8,7 +8,12 @@ namespace finalProject_2020_q3.code
     {
         public Rook(Color color, Cell poistion) : base(color, poistion) { }
 
-        public void ICastling(Rook rook, King king)
+        public override Cell AttackMovements()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Cell captureFreeCells()
         {
             throw new NotImplementedException();
         }
@@ -17,5 +22,11 @@ namespace finalProject_2020_q3.code
         {
             throw new NotImplementedException();
         }
+
+        public void ICastling(Rook rook, King king)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

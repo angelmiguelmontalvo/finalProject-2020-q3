@@ -15,5 +15,15 @@ namespace finalProject_2020_q3.code
         {
             throw new NotImplementedException();
         }
+
+        public override Cell captureFreeCells()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Cell ValidMovements()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
