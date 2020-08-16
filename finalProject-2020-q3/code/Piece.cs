@@ -15,8 +15,8 @@ namespace finalProject_2020_q3.code
             this.Position = position;
         }
 
-        public abstract Cell ValidMovements();
-        public abstract Cell AttackMovements();
-        public abstract Cell CaptureFreeCells();
+        public abstract CellList ValidMovements(Piece[,] piecesOnBoard);
+        public abstract CellList AttackMovements(Piece[,] piecesOnBoard);
+        public abstract CellList CaptureFreeCells(Piece[,] piecesOnBoard);
     }
 }

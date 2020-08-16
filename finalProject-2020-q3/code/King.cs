@@ -11,17 +11,17 @@ namespace finalProject_2020_q3.code
             throw new NotImplementedException();
         }
 
-        public override Cell ValidMovements()
+        public override CellList ValidMovements(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }
 
-        public override Cell CaptureFreeCells()
+        public override CellList CaptureFreeCells(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }
 
-        public override Cell ValidMovements()
+        public override CellList AttackMovements(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }

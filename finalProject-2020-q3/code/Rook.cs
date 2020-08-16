@@ -4,32 +4,29 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    public class Pawn : Piece, IPromotion
+    public class Rook : Piece, ICastling
     {
-        public Pawn(Color color, Cell position) : base(color, position)
-        {
+        public Rook(Color color, Cell poistion) : base(color, poistion) { }
 
-        }
-        public override Cell ValidMovements()
+        public override CellList AttackMovements(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }
 
-        public override Cell AttackMovements()
+        public override CellList CaptureFreeCells(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }
 
-        public override Cell CaptureFreeCells()
+        public override CellList ValidMovements(Piece[,] piecesOnBoard)
         {
             throw new NotImplementedException();
         }
 
-        public Piece Promote(PieceType pieceType)
+        public void ICastling(Rook rook, King king)
         {
             throw new NotImplementedException();
         }
 
     }
-
 }
