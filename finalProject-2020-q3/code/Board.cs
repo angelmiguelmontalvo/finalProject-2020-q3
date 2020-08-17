@@ -11,23 +11,23 @@ namespace finalProject_2020_q3.code
             {"1", 0}, {"2", 1}, {"3", 2}, {"4", 3}, {"5", 4}, {"6", 5}, {"7", 6}, {"8", 7},
             {"a", 0}, {"b", 1}, {"c", 2}, {"d", 3}, {"e", 4}, {"f", 5}, {"g", 6}, {"h", 7}
         };
-        public Color topColor { get; set; }
-        public Piece[,] sets { get; }
+        public Color TopColor { get; set; }
+        public Piece[,] Sets { get; }
         private int piecesOnBoard;
 
         public Board(Color topColor = Color.WHITE)
         {
-            this.topColor = topColor;
-            this.sets = new Piece[8, 8];
+            this.TopColor = topColor;
+            this.Sets = new Piece[8, 8];
             this.piecesOnBoard = 16;
             InitPieces();
         }
         private void InitPieces()
         {
-            fillSet(topColor, true);
-            fillSet(topColor == Color.BLACK? Color.WHITE: Color.BLACK, false);
+            FillSet(TopColor, true);
+            FillSet(TopColor == Color.BLACK? Color.WHITE: Color.BLACK, false);
         }
-        private void fillSet(Color color, bool isTop)
+        private void FillSet(Color color, bool isTop)
         {
             int pawnsPosition;
             int majorsPosition;
@@ -43,16 +43,16 @@ namespace finalProject_2020_q3.code
             }
             for (int i = 0; i < 8; i++)
             {
-                this.sets[pawnsPosition, i] = new Pawn(color, new Cell(pawnsPosition, i));
+                this.Sets[pawnsPosition, i] = PiceFactory.BuildPieces(PieceType.PAWN, color, new Cell(pawnsPosition, i));
             }
-            this.sets[majorsPosition, 0] = new Rook(color, new Cell(majorsPosition, 0));
-            this.sets[majorsPosition, 1] = new Knight(color, new Cell(majorsPosition, 1));
-            this.sets[majorsPosition, 2] = new Bishop(color, new Cell(majorsPosition, 2));
-            this.sets[majorsPosition, 3] = new Queen(color, new Cell(majorsPosition, 3));
-            this.sets[majorsPosition, 4] = new King(color, new Cell(majorsPosition, 4));
-            this.sets[majorsPosition, 5] = new Bishop(color, new Cell(majorsPosition, 5));
-            this.sets[majorsPosition, 6] = new Knight(color, new Cell(majorsPosition, 6));
-            this.sets[majorsPosition, 7] = new Rook(color, new Cell(majorsPosition, 7));
+            this.Sets[majorsPosition, 0] = PiceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 0));
+            this.Sets[majorsPosition, 1] = PiceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 1));
+            this.Sets[majorsPosition, 2] = PiceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 2));
+            this.Sets[majorsPosition, 3] = PiceFactory.BuildPieces(PieceType.QUEEN, color, new Cell(majorsPosition, 3));
+            this.Sets[majorsPosition, 4] = PiceFactory.BuildPieces(PieceType.KING, color, new Cell(majorsPosition, 4));
+            this.Sets[majorsPosition, 5] = PiceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 5));
+            this.Sets[majorsPosition, 6] = PiceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 6));
+            this.Sets[majorsPosition, 7] = PiceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 7));
         }
         public bool Add(Piece piece, string row, string column)
         {
@@ -63,7 +63,7 @@ namespace finalProject_2020_q3.code
                 {
                     int rowInMatrix = positions[row];
                     int columnInMatrix = positions[column];
-                    this.sets[rowInMatrix, columnInMatrix] = piece;
+                    this.Sets[rowInMatrix, columnInMatrix] = piece;
                     this.piecesOnBoard++;
                     result = true;
                 }
@@ -77,8 +77,8 @@ namespace finalProject_2020_q3.code
             {
                 int rowInMatrix = positions[row];
                 int columnInMatrix = positions[column];
-                removedPiece = this.sets[rowInMatrix, columnInMatrix];
-                this.sets[rowInMatrix, columnInMatrix] = null;
+                removedPiece = this.Sets[rowInMatrix, columnInMatrix];
+                this.Sets[rowInMatrix, columnInMatrix] = null;
                 this.piecesOnBoard--;
             }
             return removedPiece;
@@ -90,8 +90,8 @@ namespace finalProject_2020_q3.code
             {
                 int rowInMatrix = positions[row];
                 int columnInMatrix = positions[column];
-                Piece piece = this.sets[rowInMatrix, columnInMatrix];
-                CellList validCells = piece.ValidMovements(this.sets);
+                Piece piece = this.Sets[rowInMatrix, columnInMatrix];
+                CellList validCells = piece.ValidMovements(this.Sets);
                 movements = new string[validCells.Count];
                 for (int i = 0; i < movements.Length; i++)
                 {
@@ -108,8 +108,8 @@ namespace finalProject_2020_q3.code
             {
                 int rowInMatrix = positions[row];
                 int columnInMatrix = positions[column];
-                Piece piece = this.sets[rowInMatrix, columnInMatrix];
-                CellList validCells = piece.AttackMovements(this.sets);
+                Piece piece = this.Sets[rowInMatrix, columnInMatrix];
+                CellList validCells = piece.AttackMovements(this.Sets);
                 attackMovements = new string[validCells.Count];
                 for (int i = 0; i < attackMovements.Length; i++)
                 {
