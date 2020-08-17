@@ -1,13 +1,10 @@
-﻿using System;
+﻿using finalProject_2020_q3.game.movement;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace finalProject_2020_q3.game
 {
-	public enum CellType { 
-		Source,
-		Target
-	}
 	public class Game
 	{
 		public Players GamePlayers = new Players();
@@ -21,9 +18,6 @@ namespace finalProject_2020_q3.game
 			Status = GameStatus.Draw;
 		}
 
-		/**
-		 * S(2a)T(3a) 
-		 */
 		public Boolean IsValidCommand(string command)
 		{
 			var result = Regex.IsMatch(command, @"\b[S]\([1-8][a-h]\)T\([1-8][a-h]\)");
@@ -38,7 +32,7 @@ namespace finalProject_2020_q3.game
 		}
 
 		public string ReadCommand()
-        {
+		{
 			Console.WriteLine("-------------------------");
 			Console.WriteLine("- Enter command format: -");
 			Console.WriteLine("-      S(1a)T(2a)       -");
@@ -53,12 +47,12 @@ namespace finalProject_2020_q3.game
 		}
 
 		public string GetCell(string command, CellType type)
-        {
+		{
 			var cells = Regex.Matches(command, @"(?<=\()[1-8][a-h](?=\))");
 			var source = cells[0].Value;
 			var target = cells[1].Value;
 			switch (type)
-            {
+			{
 				case CellType.Source:
 					return source;
 				case CellType.Target:
@@ -101,8 +95,8 @@ namespace finalProject_2020_q3.game
 		}
 
 		public void AddMovement(Movement nextMovement)
-        {
+		{
 			GameMovements.Add(nextMovement);
-        }
+		}
 	}
 }
