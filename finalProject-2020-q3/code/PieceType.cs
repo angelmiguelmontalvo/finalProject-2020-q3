@@ -2,7 +2,7 @@
 {
     public enum PieceType
     {
-        ROCK = 0,
+        ROOK = 0,
         KNIGHT = 1,
         BISHOP = 2,
         QUEEN = 3,

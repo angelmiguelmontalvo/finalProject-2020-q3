@@ -2,6 +2,6 @@
 {
     internal interface ICastling
     {
-        public void ICastling(Rook rook, King king);
+        public void Castling(Rook rook, King king);
     }
 }

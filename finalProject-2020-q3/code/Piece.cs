@@ -6,8 +6,8 @@ namespace finalProject_2020_q3.code
 {
     public abstract class Piece
     {
-        private Color Color;
-        private Cell Position;
+        internal Color Color;
+        internal Cell Position;
 
         public Piece(Color color, Cell position)
         {

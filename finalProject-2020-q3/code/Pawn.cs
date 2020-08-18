@@ -27,7 +27,7 @@ namespace finalProject_2020_q3.code
 
         public Piece Promote(PieceType pieceType)
         {
-            throw new NotImplementedException();
+            return PiceFactory.BuildPieces(pieceType, this.Color, this.Position);
         }
 
     }
