@@ -23,7 +23,7 @@ namespace finalProject_2020_q3.code
             throw new NotImplementedException();
         }
 
-        public void ICastling(Rook rook, King king)
+        public void Castling(Rook rook, King king)
         {
             throw new NotImplementedException();
         }

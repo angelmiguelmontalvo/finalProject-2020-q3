@@ -6,7 +6,7 @@ namespace finalProject_2020_q3.code
     {
         public King(Color color, Cell poistion) : base(color, poistion) { }
 
-        public void ICastling(Rook rook, King king)
+        public void Castling(Rook rook, King king)
         {
             throw new NotImplementedException();
         }
