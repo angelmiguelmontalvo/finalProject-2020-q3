@@ -1,20 +1,21 @@
-﻿using System;
+﻿using finalProject_2020_q3.code;
+using System;
 
 namespace finalProject_2020_q3.game
 { 
 	public class Movement
 	{
 		String Command { set; get; }
-		String Source { set; get; }
-		String Target { set; get; }
+		Cell Source { set; get; }
+		Cell Target { set; get; }
 		Object Piece { set; get; }
-		Object CurrentPlayer { get; set; }
-		public Movement(Object currentPiece, Object player, string source, string target, string command)
+		Player CurrentPlayer { get; set; }
+		public Movement(Object currentPiece, Player player, string source, string target, string command)
 		{
 			Piece = currentPiece;
 			CurrentPlayer = player;
-			Source = source;
-			Target = target;
+			Source = new Cell(source);
+			Target = new Cell(target);
 			Command = command;
 		}
 

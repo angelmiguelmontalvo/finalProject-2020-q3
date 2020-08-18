@@ -23,6 +23,36 @@ namespace finalProject_2020_q3.code
             this.column = column;
         }
 
+        public Cell(string cell)
+        {
+            row = GetRow(cell);
+            column = GetColumn(cell);
+        }
+
+        public int GetRow(string cell)
+        {
+            var row = -1;
+            foreach (var pair in rowsString)
+            { 
+                if (pair.Value == cell.Substring(0, 1))
+                {
+                    row = pair.Key;
+                }
+            }
+            return row;
+        }
+
+        public int GetColumn(string cell)
+        {
+            var column = -1;
+            foreach (var pair in columnsString) {
+                   if (pair.Value == cell.Substring(1))
+                   {
+                        column = pair.Key;
+                   }
+            }
+            return column;
+        }
         public override string ToString()
         {
             return $"{rowsString[row]}{columnsString[column]}";
