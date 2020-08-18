@@ -41,6 +41,7 @@ namespace finalProject_2020_q3.code
                 pawnsPosition = 1;
                 majorsPosition = 0;
             }
+
             for (int i = 0; i < 8; i++)
             {
                 this.Sets[pawnsPosition, i] = PiceFactory.BuildPieces(PieceType.PAWN, color, new Cell(pawnsPosition, i));
