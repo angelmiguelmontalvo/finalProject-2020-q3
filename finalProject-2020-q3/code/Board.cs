@@ -13,13 +13,13 @@ namespace finalProject_2020_q3.code
         };
         public Color TopColor { get; set; }
         public Piece[,] Sets { get; }
-        private int piecesOnBoard;
+        private int PiecesOnBoard;
 
         public Board(Color topColor = Color.WHITE)
         {
             this.TopColor = topColor;
             this.Sets = new Piece[8, 8];
-            this.piecesOnBoard = 16;
+            this.PiecesOnBoard = 16;
             InitPieces();
         }
         private void InitPieces()
@@ -59,12 +59,12 @@ namespace finalProject_2020_q3.code
             bool result = false;
             if (positions.ContainsKey(row) && positions.ContainsKey(column))
             {
-                if (this.piecesOnBoard < 16)
+                if (this.PiecesOnBoard < 16)
                 {
                     int rowInMatrix = positions[row];
                     int columnInMatrix = positions[column];
                     this.Sets[rowInMatrix, columnInMatrix] = piece;
-                    this.piecesOnBoard++;
+                    this.PiecesOnBoard++;
                     result = true;
                 }
             }
@@ -79,7 +79,7 @@ namespace finalProject_2020_q3.code
                 int columnInMatrix = positions[column];
                 removedPiece = this.Sets[rowInMatrix, columnInMatrix];
                 this.Sets[rowInMatrix, columnInMatrix] = null;
-                this.piecesOnBoard--;
+                this.PiecesOnBoard--;
             }
             return removedPiece;
         }

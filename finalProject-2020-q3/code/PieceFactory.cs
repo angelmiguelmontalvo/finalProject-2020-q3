@@ -4,12 +4,12 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    class PiceFactory
+    class PieceFactory
     {
-        public static Piece BuildPieces(PieceType piceType, Color color, Cell position)
+        public static Piece BuildPieces(PieceType pieceType, Color color, Cell position)
         {
             Piece piece = null;
-            switch (piceType)
+            switch (pieceType)
             {
                 case PieceType.PAWN:
                     piece = new Pawn(color, position);
