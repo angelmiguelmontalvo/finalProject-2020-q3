@@ -41,6 +41,7 @@ namespace finalProject_2020_q3.code
                 pawnsPosition = 1;
                 majorsPosition = 0;
             }
+
             for (int i = 0; i < 8; i++)
             {
                 this.sets[pawnsPosition, i] = new Pawn(color, new Cell(pawnsPosition, i));

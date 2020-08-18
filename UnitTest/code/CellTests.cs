@@ -10,7 +10,7 @@ namespace finalProject_2020_q3.code.Tests
     public class CellTests
     {
         [TestMethod()]
-        public void GetRowTest()
+        public void Test_GetRow()
         {
             string cell = "1a";
             Cell testCell = new Cell(0, 0);
@@ -19,7 +19,7 @@ namespace finalProject_2020_q3.code.Tests
         }
 
         [TestMethod()]
-        public void GetColumnTest()
+        public void Test_GetColumn()
         {
             string cell = "1a";
             Cell testCell = new Cell(0, 0);

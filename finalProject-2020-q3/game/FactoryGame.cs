@@ -1,4 +1,5 @@
-﻿using finalProject_2020_q3.game.movement;
+﻿using finalProject_2020_q3.code;
+using finalProject_2020_q3.game.movement;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,6 +62,8 @@ namespace finalProject_2020_q3.game
         public static void PlayNextMovement() {
             // This todo validate game status here
             while (!CurrentGame.GameOver()) {
+                Console.Clear();
+                Drawer.DrawBoard(new Board());
                 Console.WriteLine($"Turn of {CurrentGame.Turn.ToString()}");
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
@@ -86,10 +89,14 @@ namespace finalProject_2020_q3.game
                 }
             }
             if (CurrentGame.Result == GameResult.Draw) {
+                Console.Clear();
                 Console.WriteLine("*************DRAW GAME ************");
+                Drawer.DrawBoard(new Board());
             } else 
             {
+                Console.Clear();
                 Console.WriteLine($"Winner is {CurrentGame.Turn.ToString()}");
+                Drawer.DrawBoard(new Board());
             }
         }
 
