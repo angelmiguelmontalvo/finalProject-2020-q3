@@ -7,16 +7,14 @@ namespace finalProject_2020_q3.code
     public abstract class Piece
     {
         internal Color Color;
-        internal Cell Position;
 
-        public Piece(Color color, Cell position)
+        public Piece(Color color)
         {
             this.Color = color;
-            this.Position = position;
         }
 
-        public abstract CellList ValidMovements(Piece[,] piecesOnBoard);
-        public abstract CellList AttackMovements(Piece[,] piecesOnBoard);
-        public abstract CellList CaptureFreeCells(Piece[,] piecesOnBoard);
+        public abstract CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column);
+        public abstract CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column);
+        public abstract CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column);
     }
 }

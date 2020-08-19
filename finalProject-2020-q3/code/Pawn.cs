@@ -6,28 +6,28 @@ namespace finalProject_2020_q3.code
 {
     public class Pawn : Piece, IPromotion
     {
-        public Pawn(Color color, Cell position) : base(color, position)
+        public Pawn(Color color) : base(color)
         {
 
         }
-        public override CellList ValidMovements(Piece[,] piecesOnBoard)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override CellList AttackMovements(Piece[,] piecesOnBoard)
+        public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
             throw new NotImplementedException();
         }
 
-        public override CellList CaptureFreeCells(Piece[,] piecesOnBoard)
+        public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
         {
             throw new NotImplementedException();
         }
 
         public Piece Promote(PieceType pieceType)
         {
-            return PiceFactory.BuildPieces(pieceType, this.Color, this.Position);
+            return PieceFactory.BuildPieces(pieceType, this.Color);
         }
 
     }

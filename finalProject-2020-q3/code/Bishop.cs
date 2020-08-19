@@ -6,19 +6,19 @@ namespace finalProject_2020_q3.code
 {
     public class Bishop : Piece
     {
-        public Bishop(Color color, Cell position): base(color, position) { }
+        public Bishop(Color color): base(color) { }
 
-        public override CellList ValidMovements(Piece[,] piecesOnBoard)
+        public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
             throw new NotImplementedException();
         }
 
-        public override CellList CaptureFreeCells(Piece[,] piecesOnBoard)
+        public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
         {
             throw new NotImplementedException();
         }
 
-        public override CellList AttackMovements(Piece[,] piecesOnBoard)
+        public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
         {
             throw new NotImplementedException();
         }
