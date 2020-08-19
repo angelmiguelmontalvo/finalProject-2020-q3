@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace finalProject_2020_q3.code
@@ -20,7 +21,7 @@ namespace finalProject_2020_q3.code
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            throw new NotImplementedException();
+            return GetValidMovements(piecesOnBoard, row, column);
         }
 
         public void Castling(Rook rook, King king)
@@ -33,5 +34,13 @@ namespace finalProject_2020_q3.code
             string result = Color == Color.WHITE ? $"RW " : $" RB";
             return result;
         }
+
+        private CellList GetValidMovements(Cell[,] piecesOnBoard, int row, int column)
+        {
+            CellList horizontal = BoardMovements.AllCellsHorizontal(piecesOnBoard, piecesOnBoard[row, column]);
+            CellList vertical = BoardMovements.AllCellsVertical(piecesOnBoard, piecesOnBoard[row, column]);
+            return (CellList)horizontal.Union(vertical).ToList();
+        }
+
     }
 }

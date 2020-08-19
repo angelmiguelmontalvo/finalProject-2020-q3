@@ -6,13 +6,13 @@ namespace finalProject_2020_q3.code
 {
     class PieceFactory
     {
-        public static Piece BuildPieces(PieceType pieceType, Color color)
+        public static Piece BuildPieces(PieceType pieceType, Color color, bool isTop = true)
         {
             Piece piece = null;
             switch (pieceType)
             {
                 case PieceType.PAWN:
-                    piece = new Pawn(color);
+                    piece = new Pawn(color, isTop);
                     break;
                 case PieceType.QUEEN:
                     piece = new Queen(color);
