@@ -84,5 +84,10 @@ namespace finalProject_2020_q3.code
             return $"{rowsString[Row]}{columnsString[Column]}";
         }
 
+        public bool IsEmpty()
+        {
+            return piece == null;
+        }
+
     }
 }
