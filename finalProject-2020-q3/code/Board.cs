@@ -44,16 +44,16 @@ namespace finalProject_2020_q3.code
 
             for (int i = 0; i < 8; i++)
             {
-                this.Sets[pawnsPosition, i] = PiceFactory.BuildPieces(PieceType.PAWN, color, new Cell(pawnsPosition, i));
+                this.Sets[pawnsPosition, i] = PieceFactory.BuildPieces(PieceType.PAWN, color, new Cell(pawnsPosition, i));
             }
-            this.Sets[majorsPosition, 0] = PiceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 0));
-            this.Sets[majorsPosition, 1] = PiceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 1));
-            this.Sets[majorsPosition, 2] = PiceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 2));
-            this.Sets[majorsPosition, 3] = PiceFactory.BuildPieces(PieceType.QUEEN, color, new Cell(majorsPosition, 3));
-            this.Sets[majorsPosition, 4] = PiceFactory.BuildPieces(PieceType.KING, color, new Cell(majorsPosition, 4));
-            this.Sets[majorsPosition, 5] = PiceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 5));
-            this.Sets[majorsPosition, 6] = PiceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 6));
-            this.Sets[majorsPosition, 7] = PiceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 7));
+            this.Sets[majorsPosition, 0] = PieceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 0));
+            this.Sets[majorsPosition, 1] = PieceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 1));
+            this.Sets[majorsPosition, 2] = PieceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 2));
+            this.Sets[majorsPosition, 3] = PieceFactory.BuildPieces(PieceType.QUEEN, color, new Cell(majorsPosition, 3));
+            this.Sets[majorsPosition, 4] = PieceFactory.BuildPieces(PieceType.KING, color, new Cell(majorsPosition, 4));
+            this.Sets[majorsPosition, 5] = PieceFactory.BuildPieces(PieceType.BISHOP, color, new Cell(majorsPosition, 5));
+            this.Sets[majorsPosition, 6] = PieceFactory.BuildPieces(PieceType.KNIGHT, color, new Cell(majorsPosition, 6));
+            this.Sets[majorsPosition, 7] = PieceFactory.BuildPieces(PieceType.ROOK, color, new Cell(majorsPosition, 7));
         }
         public bool Add(Piece piece, string row, string column)
         {

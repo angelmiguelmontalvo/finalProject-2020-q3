@@ -25,8 +25,8 @@ namespace finalProject_2020_q3.code
 
         public Cell(string cell)
         {
-            row = GetRow(cell);
-            column = GetColumn(cell);
+            Row = GetRow(cell);
+            Column = GetColumn(cell);
         }
 
         public int GetRow(string cell)

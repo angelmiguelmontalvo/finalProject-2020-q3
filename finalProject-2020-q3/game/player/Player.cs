@@ -6,17 +6,17 @@ namespace finalProject_2020_q3.game
 	{
 		String PlayerName { set; get; }
 		public Color PlayerColor;
-		public int PlayerIndex { set; get; }
+		public int PlayerTurn { set; get; }
 		public Player(string name, Color color, int index)
 		{
 			PlayerName = name;
 			PlayerColor = color;
-			PlayerIndex = index;
+			PlayerTurn = index;
 		}
 
         public override string ToString()
         {
-			return $"Player-{PlayerIndex}: {PlayerName} plays with {PlayerColor}";
+			return $"Player-{PlayerTurn}: {PlayerName} plays with {PlayerColor}";
         }
 
 		public override Boolean Equals(Object playerObject)

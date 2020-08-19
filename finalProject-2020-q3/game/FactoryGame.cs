@@ -22,7 +22,7 @@ namespace finalProject_2020_q3.game
 
         public static void GameMenu()
         {
-            CurrentGame = new Game();
+
             SetPlayers();
         }
 

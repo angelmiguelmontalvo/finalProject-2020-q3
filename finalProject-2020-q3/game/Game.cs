@@ -7,6 +7,9 @@ namespace finalProject_2020_q3.game
 {
 	public class Game
 	{
+		String CommandRegex = @"\b[S]\([1-8][a-h]\)T\([1-8][a-h]\)";
+		String CellsRegex = @"(?<=\()[1-8][a-h](?=\))";
+							
 		public Players GamePlayers = new Players();
 		public Player Turn { set; get; }
 		public GameStatus Status { set; get; }
@@ -20,15 +23,15 @@ namespace finalProject_2020_q3.game
 
 		public Boolean IsValidCommand(string command)
 		{
-			var result = Regex.IsMatch(command, @"\b[S]\([1-8][a-h]\)T\([1-8][a-h]\)");
-			if (result == false) {
-				return result;
+			var result = Regex.IsMatch(command, CommandRegex);
+			if (result) {
+				var cells = Regex.Matches(command, CellsRegex);
+				var source = cells[0].Value;
+				var target = cells[1].Value;
+				result = String.Equals(source, target, StringComparison.OrdinalIgnoreCase);
+				return !result;
 			}
-			var cells = Regex.Matches(command, @"(?<=\()[1-8][a-h](?=\))");
-			var source = cells[0].Value;
-			var target = cells[1].Value;
-			result = String.Equals(source, target, StringComparison.OrdinalIgnoreCase);
-			return !result;
+			return result;
 		}
 
 		public string ReadCommand()
@@ -48,7 +51,7 @@ namespace finalProject_2020_q3.game
 
 		public string GetCell(string command, CellType type)
 		{
-			var cells = Regex.Matches(command, @"(?<=\()[1-8][a-h](?=\))");
+			var cells = Regex.Matches(command, CellsRegex);
 			var source = cells[0].Value;
 			var target = cells[1].Value;
 			switch (type)
@@ -69,18 +72,17 @@ namespace finalProject_2020_q3.game
 
 		public void SetFirstTurn()
 		{
-			Turn = GamePlayers[0].PlayerIndex < GamePlayers[1].PlayerIndex ? GamePlayers[0] : GamePlayers[1];
+			Turn = GamePlayers[0].PlayerTurn < GamePlayers[1].PlayerTurn ? GamePlayers[0] : GamePlayers[1];
 		}
 
 		public Player GetNextPlayer()
 		{
-			var index = Turn.PlayerIndex == 0 ? 1 : 0;
-			Console.WriteLine(index);
+			var index = Turn.PlayerTurn == 0 ? 1 : 0;
 			return GamePlayers[index];
 		}
 
 		public void SetNextPlayer() {
-			var index = Turn.PlayerIndex == 0 ? 1 : 0;
+			var index = Turn.PlayerTurn == 0 ? 1 : 0;
 			Turn = GamePlayers[index];
 		}
 
