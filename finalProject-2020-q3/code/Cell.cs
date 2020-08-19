@@ -14,6 +14,7 @@ namespace finalProject_2020_q3.code
         {
             {0, "a"}, {1, "b"}, {2, "c"}, {3, "d"}, {4, "e"}, {5, "f"}, {6, "g"}, {7, "h"}
         };
+        public Piece piece { get; set; }
         public int Row { get; }
         public int Column { get; }
 
@@ -25,8 +26,8 @@ namespace finalProject_2020_q3.code
 
         public Cell(string cell)
         {
-            Row = GetRow(cell);
-            Column = GetColumn(cell);
+            this.Row = GetRow(cell);
+            this.Column = GetColumn(cell);
         }
 
         public int GetRow(string cell)
@@ -46,12 +47,37 @@ namespace finalProject_2020_q3.code
         {
             var column = -1;
             foreach (var pair in columnsString) {
-                   if (pair.Value == cell.Substring(1))
-                   {
-                        column = pair.Key;
-                   }
+                if (pair.Value == cell.Substring(1))
+                {
+                    column = pair.Key;
+                }
             }
             return column;
+        }
+        public CellList GetValidMovements(Cell[,] cellsOnBoard)
+        {
+            CellList movements = new CellList();
+            if (this.piece == null)
+            {
+                return movements;
+            }
+            movements = piece.ValidMovements(cellsOnBoard, this.Row, this.Column);
+            return movements;
+        }
+
+        public CellList GetAttackMovements(Cell[,] cellsOnBoard)
+        {
+            CellList movements = new CellList();
+            if (this.piece == null)
+            {
+                return movements;
+            }
+            movements = piece.AttackMovements(cellsOnBoard, this.Row, this.Column);
+            return movements;
+        }
+        public void RemovePiece() 
+        {
+            this.piece = null;
         }
         public override string ToString()
         {

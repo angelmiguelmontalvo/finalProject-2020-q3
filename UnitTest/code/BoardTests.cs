@@ -135,7 +135,7 @@ namespace finalProject_2020_q3.code.Tests
 
         private Piece CreatePawn() 
         {
-            return new Pawn(Color.WHITE, new Cell(2, 0));
+            return new Pawn(Color.WHITE);
         }
     }
 }

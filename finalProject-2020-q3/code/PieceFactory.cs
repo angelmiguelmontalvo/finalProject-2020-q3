@@ -6,28 +6,28 @@ namespace finalProject_2020_q3.code
 {
     class PieceFactory
     {
-        public static Piece BuildPieces(PieceType pieceType, Color color, Cell position)
+        public static Piece BuildPieces(PieceType pieceType, Color color)
         {
             Piece piece = null;
             switch (pieceType)
             {
                 case PieceType.PAWN:
-                    piece = new Pawn(color, position);
+                    piece = new Pawn(color);
                     break;
                 case PieceType.QUEEN:
-                    piece = new Queen(color, position);
+                    piece = new Queen(color);
                     break;
                 case PieceType.KNIGHT:
-                    piece = new Knight(color, position);
+                    piece = new Knight(color);
                     break;
                 case PieceType.BISHOP:
-                    piece = new Bishop(color, position);
+                    piece = new Bishop(color);
                     break;
                 case PieceType.ROOK:
-                    piece = new Rook(color, position);
+                    piece = new Rook(color);
                     break;
                 case PieceType.KING:
-                    piece = new King(color, position);
+                    piece = new King(color);
                     break;
                 default: return null;
             }
