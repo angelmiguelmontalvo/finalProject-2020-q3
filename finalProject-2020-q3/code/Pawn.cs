@@ -30,6 +30,11 @@ namespace finalProject_2020_q3.code
             return PieceFactory.BuildPieces(pieceType, this.Color);
         }
 
+        public override string ToString()
+        {
+            string result = Color == Color.WHITE ? $"pW " : $" pB";
+            return result;
+        }
     }
 
 }

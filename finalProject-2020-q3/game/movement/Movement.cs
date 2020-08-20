@@ -10,12 +10,12 @@ namespace finalProject_2020_q3.game
 		Cell Target { set; get; }
 		Object Piece { set; get; }
 		Player CurrentPlayer { get; set; }
-		public Movement(Object currentPiece, Player player, string source, string target, string command)
+		public Movement(Object currentPiece, Player player, Cell source, Cell target, string command)
 		{
 			Piece = currentPiece;
 			CurrentPlayer = player;
-			Source = new Cell(source);
-			Target = new Cell(target);
+			Source = source;
+			Target = target;
 			Command = command;
 		}
 

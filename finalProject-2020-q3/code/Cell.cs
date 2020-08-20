@@ -8,7 +8,7 @@ namespace finalProject_2020_q3.code
     {
         public static readonly Dictionary<int, string> rowsString = new Dictionary<int, string>
         {
-            {0, "1"}, {1, "2"}, {2, "3"}, {3, "4"}, {4, "5"}, {5, "6"}, {6, "7"}, {7, "8"},
+            {0, "8"}, {1, "7"}, {2, "6"}, {3, "5"}, {4, "4"}, {5, "3"}, {6, "2"}, {7, "1"},
         };
         public static readonly Dictionary<int, string> columnsString = new Dictionary<int, string>
         {
@@ -28,6 +28,16 @@ namespace finalProject_2020_q3.code
         {
             this.Row = GetRow(cell);
             this.Column = GetColumn(cell);
+        }
+
+        public string GetRow()
+        {
+            return rowsString[Row];
+        }
+
+        public string GetColumn()
+        {
+            return columnsString[Column];
         }
 
         public int GetRow(string cell)
@@ -84,5 +94,10 @@ namespace finalProject_2020_q3.code
             return $"{rowsString[Row]}{columnsString[Column]}";
         }
 
+        public string WritePiece()
+        {
+            string result = this.piece == null ? "   " : this.piece.ToString();
+            return result;
+        }
     }
 }

@@ -6,7 +6,12 @@ namespace finalProject_2020_q3.code
 {
     public class Drawer
     {
-        public static void DrawBoard(Board board)
+        Board Board { set; get; }
+        public Drawer(Board board)
+        {
+            Board = board;
+        }
+        public void DrawBoard()
         {
             StringBuilder rowBoard = new StringBuilder();
             rowBoard.Append("     a   b   c   d   e   f   g   h  ");
@@ -18,11 +23,11 @@ namespace finalProject_2020_q3.code
                 {
                     if (j == 0)
                     {
-                        rowBoard.Append($"\n{row} |   |");
+                        rowBoard.Append($"\n{row} |{Board.Sets[i,j].WritePiece()}|");
                     }
                     else
                     {
-                        rowBoard.Append("   |");
+                        rowBoard.Append($"{Board.Sets[i,j].WritePiece()}|");
                     }
                 }
                 rowBoard.Append("\n  ---------------------------------");
