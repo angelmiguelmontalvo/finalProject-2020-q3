@@ -23,15 +23,12 @@ namespace finalProject_2020_q3.code
         {
             CellList cellList = ValidMovements(piecesOnBoard, row, column);
             return (CellList)cellList.Where(cell => cell.IsEmpty() == false).ToList();
-<<<<<<< HEAD
         }
 
         public override string ToString()
         {
             string result = Color == Color.WHITE ? $"BW " : $" BB";
             return result;
-=======
->>>>>>> 89b1aebe1089414cf6c844afbdfaa7923484a9b9
         }
     }
 }

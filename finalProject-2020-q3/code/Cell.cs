@@ -94,14 +94,12 @@ namespace finalProject_2020_q3.code
             return $"{rowsString[Row]}{columnsString[Column]}";
         }
 
-<<<<<<< HEAD
         public string WritePiece()
         {
             string result = this.piece == null ? "   " : this.piece.ToString();
             return result;
         }
-=======
->>>>>>> 89b1aebe1089414cf6c844afbdfaa7923484a9b9
+
         public bool IsEmpty()
         {
             return piece == null;

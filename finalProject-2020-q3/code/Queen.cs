@@ -25,15 +25,12 @@ namespace finalProject_2020_q3.code
             CellList cross = BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
             CellList diagonal = BoardMovements.AllCellsDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             return (CellList)cross.Union(diagonal).ToList();
-<<<<<<< HEAD
         }
 
         public override string ToString()
         {
             string result = Color == Color.WHITE ? $"QW " : $" QB";
             return result;
-=======
->>>>>>> 89b1aebe1089414cf6c844afbdfaa7923484a9b9
         }
     }
 }

@@ -29,8 +29,6 @@ namespace finalProject_2020_q3.code
         {
             throw new NotImplementedException();
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         public override string ToString()
         {
@@ -40,14 +38,8 @@ namespace finalProject_2020_q3.code
 
         private CellList GetValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            CellList horizontal = BoardMovements.AllCellsHorizontal(piecesOnBoard, piecesOnBoard[row, column]);
-            CellList vertical = BoardMovements.AllCellsVertical(piecesOnBoard, piecesOnBoard[row, column]);
-            return (CellList)horizontal.Union(vertical).ToList();
+            return BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
         }
 
-=======
->>>>>>> 63ddd19... feature - movements
-=======
->>>>>>> 89b1aebe1089414cf6c844afbdfaa7923484a9b9
     }
 }
