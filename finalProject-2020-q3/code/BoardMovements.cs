@@ -27,7 +27,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellUpLeaft(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.UpLeftDiagonal(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ?
@@ -39,7 +39,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellUpRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.UpRightDiagonal(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ?
@@ -51,7 +51,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellDownRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.DownRightDiagonal(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ?
@@ -63,7 +63,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellDownLeft(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.DownLeftDiagonal(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ?
@@ -75,7 +75,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellsLeft(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.LeftStraight(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ? 
@@ -87,7 +87,7 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellsRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.RightStraight(piecesOnBoard, cell);
-            if (ValidatCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
                 return next.IsEmpty() ?
@@ -126,7 +126,7 @@ namespace finalProject_2020_q3.code
             return false;
         }
 
-        private static bool ValidatCell(Cell cell)
+        private static bool ValidateCell(Cell cell)
         {
             return cell != null;
         }
