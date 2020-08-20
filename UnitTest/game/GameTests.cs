@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using finalProject_2020_q3.game.movement;
+using finalProject_2020_q3.code;
 
 namespace finalProject_2020_q3.game.Tests
 {
@@ -13,8 +14,8 @@ namespace finalProject_2020_q3.game.Tests
         public Game GetTestPlayerGame()
         {
             Game game = new Game();
-            Player player1 = new Player("Player1", Color.White, 0);
-            Player player2 = new Player("Player2", Color.Black, 1);
+            Player player1 = new Player("Player1", Color.WHITE, 0);
+            Player player2 = new Player("Player2", Color.BLACK, 1);
             game.GamePlayers.AddPlayers(player1, player2);
             return game;
         }
@@ -72,8 +73,9 @@ namespace finalProject_2020_q3.game.Tests
         public void GetCellTest_Source(string input)
         {
             Game game = new Game();
-            string source = game.GetCell(input, CellType.Source);
-            Assert.AreEqual("1a", source, $"Not match 1a {source}");
+            Cell source = game.GetCell(input, CellType.Source);
+            string sourceString = source.ToString();
+            Assert.AreEqual("1a", sourceString, $"Not match 1a {sourceString}");
         }
 
         [TestMethod()]
@@ -81,15 +83,16 @@ namespace finalProject_2020_q3.game.Tests
         public void GetCellTest_Target(string input)
         {
             Game game = new Game();
-            string target = game.GetCell(input, CellType.Target);
-            Assert.AreEqual("8a", target, $"Not match 1a {target}");
+            Cell target = game.GetCell(input, CellType.Target);
+            string targetString = target.ToString();
+            Assert.AreEqual("8a", targetString, $"Not match 8a {targetString}");
         }
 
         [TestMethod()]
         public void GetNextPlayerTest()
         {
             Game game = GetTestPlayerGame();
-            Player player2 = new Player("Player2", Color.Black, 1);
+            Player player2 = new Player("Player2", Color.BLACK, 1);
             game.SetFirstTurn();
             Player nextPlayer = game.GetNextPlayer();
             Assert.AreEqual(nextPlayer, player2, "Wrong next player.");
@@ -99,7 +102,7 @@ namespace finalProject_2020_q3.game.Tests
         public void SetFirstTurnTest()
         {
             Game game = GetTestPlayerGame();
-            Player player1 = new Player("Player1", Color.White, 0);
+            Player player1 = new Player("Player1", Color.WHITE, 0);
             game.SetFirstTurn();
             Assert.AreEqual(game.Turn, player1, "Wrong first player.");
         }
@@ -108,7 +111,7 @@ namespace finalProject_2020_q3.game.Tests
         public void SetNextPlayerTest()
         {
             Game game = GetTestPlayerGame();
-            Player player2 = new Player("Player2", Color.Black, 1);
+            Player player2 = new Player("Player2", Color.BLACK, 1);
             game.SetFirstTurn();
             game.SetNextPlayer();
             Assert.AreEqual(game.Turn, player2, "Wrong next player.");
@@ -118,7 +121,7 @@ namespace finalProject_2020_q3.game.Tests
         public void SetResignationTest_BlackWin()
         {
             Game game = GetTestPlayerGame();
-            Player player2 = new Player("Player2", Color.Black, 1);
+            Player player2 = new Player("Player2", Color.BLACK, 1);
             game.SetFirstTurn();
             game.SetResignation();
             Assert.AreEqual(game.Turn, player2, "Wrong winner player.");
@@ -128,7 +131,7 @@ namespace finalProject_2020_q3.game.Tests
         public void SetResignationTest_WhiteWin()
         {
             Game game = GetTestPlayerGame();
-            Player player1 = new Player("Player1", Color.White, 0);
+            Player player1 = new Player("Player1", Color.WHITE, 0);
             game.SetFirstTurn();
             game.SetNextPlayer();
             game.SetResignation();

@@ -32,14 +32,14 @@ namespace finalProject_2020_q3.game
             Console.WriteLine("-        Set players data    -");
             Console.WriteLine("------------------------------");
             Color colorPlayer1 = GetRandomColor();
-            Color colorPlayer2 = colorPlayer1 == Color.White ? Color.Black : Color.White;
+            Color colorPlayer2 = colorPlayer1 == Color.WHITE ? Color.BLACK : Color.WHITE;
             Console.WriteLine("Enter player1 name: ");
             String namePlayer1 = Console.ReadLine();
-            int indexPlayer1 = colorPlayer1 == Color.White ? 0 : 1;
+            int indexPlayer1 = colorPlayer1 == Color.WHITE ? 0 : 1;
             Player player1 = new Player(namePlayer1, colorPlayer1, indexPlayer1);
             Console.WriteLine("Enter player2 name: ");
             String namePlayer2 = Console.ReadLine();
-            int indexPlayer2 = colorPlayer2 == Color.White ? 0 : 1;
+            int indexPlayer2 = colorPlayer2 == Color.WHITE ? 0 : 1;
             Player player2 = new Player(namePlayer2, colorPlayer2, indexPlayer2);
             Console.WriteLine(player1.ToString());
             Console.WriteLine(player2.ToString());
@@ -54,16 +54,16 @@ namespace finalProject_2020_q3.game
             int coin = random.Next(0, 10);
             if (coin <= 5)
             {
-                return Color.White;
+                return Color.WHITE;
             }
-            return Color.Black;
+            return Color.BLACK;
         }
 
         public static void PlayNextMovement() {
             // This todo validate game status here
             while (!CurrentGame.GameOver()) {
                 Console.Clear();
-                Drawer.DrawBoard(new Board());
+                CurrentGame.GameDrawer.DrawBoard();
                 Console.WriteLine($"Turn of {CurrentGame.Turn.ToString()}");
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
@@ -91,20 +91,21 @@ namespace finalProject_2020_q3.game
             if (CurrentGame.Result == GameResult.Draw) {
                 Console.Clear();
                 Console.WriteLine("*************DRAW GAME ************");
-                Drawer.DrawBoard(new Board());
+                CurrentGame.GameDrawer.DrawBoard();
             } else 
             {
                 Console.Clear();
                 Console.WriteLine($"Winner is {CurrentGame.Turn.ToString()}");
-                Drawer.DrawBoard(new Board());
+                CurrentGame.GameDrawer.DrawBoard();
             }
         }
 
         public static void ReadCommand() {
             string command = CurrentGame.ReadCommand();
             Object piece = new object();
-            string source = CurrentGame.GetCell(command, CellType.Source);
-            string target = CurrentGame.GetCell(command, CellType.Target);
+            Cell source = CurrentGame.GetCell(command, CellType.Source);
+            Cell target = CurrentGame.GetCell(command, CellType.Target);
+            CurrentGame.ApplyMovement(source, target);
             CurrentGame.AddMovement(new Movement(piece, CurrentGame.Turn, source, target, command));
         }
     }

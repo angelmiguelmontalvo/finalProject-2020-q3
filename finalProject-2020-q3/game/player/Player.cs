@@ -1,4 +1,5 @@
-﻿using System;
+﻿using finalProject_2020_q3.code;
+using System;
 
 namespace finalProject_2020_q3.game
 { 

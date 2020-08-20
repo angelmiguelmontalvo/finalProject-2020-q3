@@ -8,7 +8,7 @@ namespace finalProject_2020_q3.code
     {
         public static readonly Dictionary<string, int> positions = new Dictionary<string, int>
         {
-            {"1", 0}, {"2", 1}, {"3", 2}, {"4", 3}, {"5", 4}, {"6", 5}, {"7", 6}, {"8", 7},
+            {"8", 0}, {"7", 1}, {"6", 2}, {"5", 3}, {"4", 4}, {"3", 5}, {"2", 6}, {"1", 7},
             {"a", 0}, {"b", 1}, {"c", 2}, {"d", 3}, {"e", 4}, {"f", 5}, {"g", 6}, {"h", 7}
         };
         public Color TopColor { get; set; }
@@ -66,6 +66,29 @@ namespace finalProject_2020_q3.code
             this.Sets[majorsPosition, 6].piece = PieceFactory.BuildPieces(PieceType.KNIGHT, color);
             this.Sets[majorsPosition, 7].piece = PieceFactory.BuildPieces(PieceType.ROOK, color);
         }
+
+        public Cell GetCell(string cell)
+        {
+            string rowString = cell.Substring(0,1);
+            string columnString = cell.Substring(1);
+            int rowInMatrix = positions[rowString];
+            int columnInMatrix = positions[columnString];
+            return this.Sets[rowInMatrix, columnInMatrix];
+        }
+
+        public void ApplyMovement(Cell source, Cell target)
+        {
+            Piece piece = RemovePiece(source);
+            if (target.piece != null) {
+                RemovePiece(target);
+            }
+            AddPiece(piece, target);
+        }
+
+        public bool AddPiece(Piece piece, Cell cell) {
+            return Add(piece, cell.GetRow(), cell.GetColumn());
+        }
+        
         public bool Add(Piece piece, string row, string column)
         {
             bool result = false;
@@ -81,6 +104,11 @@ namespace finalProject_2020_q3.code
                 }
             }
             return result;
+        }
+
+        public Piece RemovePiece(Cell cell)
+        {
+            return Remove(cell.GetRow(), cell.GetColumn());
         }
         public Piece Remove(string row, string column)
         {

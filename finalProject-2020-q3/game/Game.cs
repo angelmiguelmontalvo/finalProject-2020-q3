@@ -1,4 +1,5 @@
 ﻿using finalProject_2020_q3.game.movement;
+using finalProject_2020_q3.code;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -9,16 +10,19 @@ namespace finalProject_2020_q3.game
 	{
 		String CommandRegex = @"\b[S]\([1-8][a-h]\)T\([1-8][a-h]\)";
 		String CellsRegex = @"(?<=\()[1-8][a-h](?=\))";
-							
+
 		public Players GamePlayers = new Players();
 		public Player Turn { set; get; }
 		public GameStatus Status { set; get; }
 		public GameResult Result { get; private set; }
 		public Movements GameMovements = new Movements();
+		public Board GameBoard = new Board();
+		public Drawer GameDrawer { get; set; }
 		public Game()
 		{
 			Result = GameResult.Play;
 			Status = GameStatus.Draw;
+			GameDrawer = new Drawer(GameBoard);
 		}
 
 		public Boolean IsValidCommand(string command)
@@ -49,7 +53,7 @@ namespace finalProject_2020_q3.game
 			return command;
 		}
 
-		public string GetCell(string command, CellType type)
+		public Cell GetCell(string command, CellType type)
 		{
 			var cells = Regex.Matches(command, CellsRegex);
 			var source = cells[0].Value;
@@ -57,13 +61,18 @@ namespace finalProject_2020_q3.game
 			switch (type)
 			{
 				case CellType.Source:
-					return source;
+					return GameBoard.GetCell(source);
 				case CellType.Target:
-					return target;
+					return GameBoard.GetCell(target);
 				default:
 					return null;
 			}
 		}
+
+		public void ApplyMovement(Cell source, Cell target)
+        {
+			GameBoard.ApplyMovement(source, target);
+        }
 
 		public Boolean IsValidMovement()
 		{
@@ -92,7 +101,7 @@ namespace finalProject_2020_q3.game
 		}
 
 		public void SetResignation() {
-			Result = Turn.PlayerColor == Color.Black ? GameResult.WhiteWin : GameResult.BlackWin;
+			Result = Turn.PlayerColor == Color.BLACK ? GameResult.WhiteWin : GameResult.BlackWin;
 			SetNextPlayer();
 		}
 
