@@ -14,15 +14,17 @@ namespace finalProject_2020_q3.code
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            CellList response = new CellList();
-            response.Add(CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.LeftStraight(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.RightStraight(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.UpLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]));
-            response.Add(CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]));
+            CellList response = new CellList
+            {
+                CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.LeftStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.RightStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.UpLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column])
+            };
             return (CellList)response.Where(cell => cell != null).ToList();
 
         }
