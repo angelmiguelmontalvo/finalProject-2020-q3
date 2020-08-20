@@ -6,60 +6,114 @@ namespace finalProject_2020_q3.code
 {
     class BoardMovements
     {
-        public static CellList AllCellsHorizontal(Cell[,] piecesOnBoard, Cell position)
+        public static CellList AllCrossCells(Cell[,] piecesOnBoard, Cell position)
         {
-            CellList left = GetLeftEmpty(piecesOnBoard, position, new CellList());
-            CellList response = GetRightEmpty(piecesOnBoard, position, left);
+            CellList left = GetCellsLeft(piecesOnBoard, position, new CellList());
+            CellList right = GetCellsRight(piecesOnBoard, position, left);
+            CellList down = GetCellsDown(piecesOnBoard, position, right);
+            CellList response = GetCellsUp(piecesOnBoard, position, down);
             return response;
         }
 
-        public static CellList AllCellsVertical(Cell[,] piecesOnBoard, Cell position)
+        public static CellList AllCellsDiagonal(Cell[,] piecesOnBoard, Cell position)
         {
-            CellList down = GetDownEmpty(piecesOnBoard, position, new CellList());
-            CellList response = GetUpEmpty(piecesOnBoard, position, down);
+            CellList downLeft = GetCellDownLeft(piecesOnBoard, position, new CellList());
+            CellList downRight = GetCellDownRight(piecesOnBoard, position, downLeft);
+            CellList upLeaft = GetCellUpLeaft(piecesOnBoard, position, downRight);
+            CellList response = GetCellUpRight(piecesOnBoard, position, upLeaft);
             return response;
         }
 
-        private static CellList GetLeftEmpty(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        private static CellList GetCellUpLeaft(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            Cell next = CellMovements.UpLeftDiagonal(piecesOnBoard, cell);
+            if (ValidatCell(next))
+            {
+                response.Add(next);
+                return next.IsEmpty() ?
+                    GetCellUpLeaft(piecesOnBoard, next, response) : response;
+            }
+            return response;
+        }
+
+        private static CellList GetCellUpRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            Cell next = CellMovements.UpRightDiagonal(piecesOnBoard, cell);
+            if (ValidatCell(next))
+            {
+                response.Add(next);
+                return next.IsEmpty() ?
+                    GetCellUpRight(piecesOnBoard, next, response) : response;
+            }
+            return response;
+        }
+
+        private static CellList GetCellDownRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            Cell next = CellMovements.DownRightDiagonal(piecesOnBoard, cell);
+            if (ValidatCell(next))
+            {
+                response.Add(next);
+                return next.IsEmpty() ?
+                    GetCellDownRight(piecesOnBoard, next, response) : response;
+            }
+            return response;
+        }
+
+        private static CellList GetCellDownLeft(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            Cell next = CellMovements.DownLeftDiagonal(piecesOnBoard, cell);
+            if (ValidatCell(next))
+            {
+                response.Add(next);
+                return next.IsEmpty() ?
+                    GetCellDownLeft(piecesOnBoard, next, response) : response;
+            }
+            return response;
+        }
+
+        private static CellList GetCellsLeft(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.LeftStraight(piecesOnBoard, cell);
-            if (ValidateEmptyCell(next))
+            if (ValidatCell(next))
             {
                 response.Add(next);
-                return GetLeftEmpty(piecesOnBoard, next, response);
+                return next.IsEmpty() ? 
+                    GetCellsLeft(piecesOnBoard, next, response) : response;
             }
             return response;
         }
 
-        private static CellList GetRightEmpty(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        private static CellList GetCellsRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.RightStraight(piecesOnBoard, cell);
-            if (ValidateEmptyCell(next))
+            if (ValidatCell(next))
             {
                 response.Add(next);
-                return GetRightEmpty(piecesOnBoard, next, response);
+                return next.IsEmpty() ?
+                    GetCellsRight(piecesOnBoard, next, response) : response;
             }
             return response;
         }
 
-        private static CellList GetUpEmpty(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        private static CellList GetCellsUp(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.UpStraight(piecesOnBoard, cell);
             if (ValidateEmptyCell(next))
             {
                 response.Add(next);
-                return GetUpEmpty(piecesOnBoard, next, response);
+                return GetCellsUp(piecesOnBoard, next, response);
             }
             return response;
         }
 
-        private static CellList GetDownEmpty(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        private static CellList GetCellsDown(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.DownStraight(piecesOnBoard, cell);
             if (ValidateEmptyCell(next))
             {
                 response.Add(next);
-                return GetDownEmpty(piecesOnBoard, next, response);
+                return GetCellsDown(piecesOnBoard, next, response);
             }
             return response;
         }
@@ -72,5 +126,9 @@ namespace finalProject_2020_q3.code
             return false;
         }
 
+        private static bool ValidatCell(Cell cell)
+        {
+            return cell != null;
+        }
     }
 }
