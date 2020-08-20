@@ -99,5 +99,11 @@ namespace finalProject_2020_q3.code
             string result = this.piece == null ? "   " : this.piece.ToString();
             return result;
         }
+
+        public bool IsEmpty()
+        {
+            return piece == null;
+        }
+
     }
 }

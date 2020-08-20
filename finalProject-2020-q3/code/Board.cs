@@ -55,7 +55,7 @@ namespace finalProject_2020_q3.code
 
             for (int i = 0; i < 8; i++)
             {
-                this.Sets[pawnsPosition, i].piece = PieceFactory.BuildPieces(PieceType.PAWN, color);
+                this.Sets[pawnsPosition, i].piece = PieceFactory.BuildPieces(PieceType.PAWN, color, isTop);
             }
             this.Sets[majorsPosition, 0].piece = PieceFactory.BuildPieces(PieceType.ROOK, color);
             this.Sets[majorsPosition, 1].piece = PieceFactory.BuildPieces(PieceType.KNIGHT, color);

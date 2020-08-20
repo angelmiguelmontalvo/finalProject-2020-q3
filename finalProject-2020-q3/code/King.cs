@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace finalProject_2020_q3.code
 {
@@ -13,7 +14,19 @@ namespace finalProject_2020_q3.code
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            throw new NotImplementedException();
+            CellList response = new CellList
+            {
+                CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.LeftStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.RightStraight(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.UpLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
+                CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column])
+            };
+            return (CellList)response.Where(cell => cell != null).ToList();
+
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
@@ -23,7 +36,8 @@ namespace finalProject_2020_q3.code
 
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            throw new NotImplementedException();
+            CellList cellList = ValidMovements(piecesOnBoard, row, column);
+            return (CellList)cellList.Where(cell => cell.IsEmpty() == false).ToList();
         }
 
         public override string ToString()
