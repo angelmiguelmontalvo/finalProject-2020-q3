@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace finalProject_2020_q3.code
@@ -116,6 +117,36 @@ namespace finalProject_2020_q3.code
                 return GetCellsDown(piecesOnBoard, next, response);
             }
             return response;
+        }
+
+        private static CellList LeftAndRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            response.Add(CellMovements.LeftStraight(piecesOnBoard, cell));
+            response.Add(CellMovements.RightStraight(piecesOnBoard, cell));
+            return response;
+        }
+        private static CellList UpAndDown(Cell[,] piecesOnBoard, Cell cell, CellList response)
+        {
+            response.Add(CellMovements.UpStraight(piecesOnBoard, cell));
+            response.Add(CellMovements.DownStraight(piecesOnBoard, cell));
+            return response;
+        }
+
+        public static CellList GetKnightMovement(Cell[,] piecesOnBoard, Cell cell)
+        {
+            CellList cells = new CellList();
+            Cell verticalDown = CellMovements.DownStraight(piecesOnBoard, CellMovements.DownStraight(piecesOnBoard, cell));
+            Cell verticalUp = CellMovements.UpStraight(piecesOnBoard, CellMovements.UpStraight(piecesOnBoard, cell));
+
+            Cell horizontalLeft = CellMovements.LeftStraight(piecesOnBoard, CellMovements.LeftStraight(piecesOnBoard, cell));
+            Cell horizontalRight = CellMovements.RightStraight(piecesOnBoard, CellMovements.RightStraight(piecesOnBoard, cell));
+
+            LeftAndRight(piecesOnBoard, verticalDown, cells);
+            LeftAndRight(piecesOnBoard, verticalUp, cells);
+            UpAndDown(piecesOnBoard, horizontalLeft, cells);
+            UpAndDown(piecesOnBoard, horizontalRight, cells);
+
+            return (CellList)cells.Where(cell => cell != null).ToList();
         }
         private static bool ValidateEmptyCell(Cell cell)
         {
