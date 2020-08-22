@@ -3,6 +3,7 @@ using finalProject_2020_q3.code;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace finalProject_2020_q3.game
 {
@@ -10,6 +11,7 @@ namespace finalProject_2020_q3.game
 	{
 		String CommandRegex = @"\b[S]\([1-8][a-h]\)T\([1-8][a-h]\)";
 		String CellsRegex = @"(?<=\()[1-8][a-h](?=\))";
+		String SelectRegex = @"\b[P]\([1-8][a-h]\)";
 
 		public Players GamePlayers = new Players();
 		public Player Turn { set; get; }
@@ -34,15 +36,35 @@ namespace finalProject_2020_q3.game
 				var target = cells[1].Value;
 				result = String.Equals(source, target, StringComparison.OrdinalIgnoreCase);
 				return !result;
-			}
+			} 
+			result = Regex.IsMatch(command, SelectRegex);
 			return result;
 		}
 
+		public Boolean IsSelectCommand(string command)
+        {
+			return Regex.IsMatch(command, SelectRegex);
+		}
+
+		public Boolean IsMovementCommand(string command)
+        {
+			var result = Regex.IsMatch(command, CommandRegex);
+			if (result)
+			{
+				var cells = Regex.Matches(command, CellsRegex);
+				var source = cells[0].Value;
+				var target = cells[1].Value;
+				result = String.Equals(source, target, StringComparison.OrdinalIgnoreCase);
+				return !result;
+			}
+			return result;
+		}
 		public string ReadCommand()
 		{
 			Console.WriteLine("-------------------------");
 			Console.WriteLine("- Enter command format: -");
 			Console.WriteLine("-      S(1a)T(2a)       -");
+			Console.WriteLine("-      P(2a)            -");
 			Console.WriteLine("-------------------------");
 			string command = Console.ReadLine();
 			while (!this.IsValidCommand(command))
@@ -57,7 +79,10 @@ namespace finalProject_2020_q3.game
 		{
 			var cells = Regex.Matches(command, CellsRegex);
 			var source = cells[0].Value;
-			var target = cells[1].Value;
+			var target = cells[0].Value;
+			if (cells.Count > 1) { 
+				target = cells[1].Value;
+			}
 			switch (type)
 			{
 				case CellType.Source:
@@ -109,5 +134,16 @@ namespace finalProject_2020_q3.game
 		{
 			GameMovements.Add(nextMovement);
 		}
+
+		public string PrintMovements(CellList cellList, Cell source)
+        {
+			StringBuilder builder = new StringBuilder();
+			builder.Append("Posible movements:");
+			foreach (Cell target in cellList) 
+			{
+				builder.Append($"\nS({source.ToString()})T({target.ToString()})");
+			}
+			return builder.ToString();
+        }
 	}
 }

@@ -49,7 +49,7 @@ namespace finalProject_2020_q3.code
 
         private static bool ValidatePositionCell (int row, int column)
         {
-            if (column<8 && column > 0 && row < 8 && row > 0)
+            if (column < 8 && column >= 0 && row < 8 && row >= 0)
             {
                 return true;
             }

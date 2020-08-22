@@ -19,9 +19,9 @@ namespace finalProject_2020_q3.code
             cellmovement = IsTop ?
                 CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]) : 
                 CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]);
-            if (cellmovement.IsEmpty())
+            if (cellmovement != null && cellmovement.IsEmpty())
             {
-                cellsValid.Add(cellmovement);
+                cellsValid.Add(cellmovement);                
             }
             return cellsValid;
         }

@@ -73,8 +73,10 @@ namespace finalProject_2020_q3.game
                 {
                     case "1":
                         // If is the movement is a checkmat avoid set next player
-                        CurrentGame.SetNextPlayer();
-                        ReadCommand();
+                        if (ReadCommand())
+                        {
+                            CurrentGame.SetNextPlayer();
+                        }                        
                         break;
                     case "2":
                         CurrentGame.SetResignation();
@@ -100,13 +102,27 @@ namespace finalProject_2020_q3.game
             }
         }
 
-        public static void ReadCommand() {
+        public static Boolean ReadCommand() {
             string command = CurrentGame.ReadCommand();
-            Object piece = new object();
-            Cell source = CurrentGame.GetCell(command, CellType.Source);
-            Cell target = CurrentGame.GetCell(command, CellType.Target);
-            CurrentGame.ApplyMovement(source, target);
-            CurrentGame.AddMovement(new Movement(piece, CurrentGame.Turn, source, target, command));
+            if (CurrentGame.IsMovementCommand(command))
+            {
+                Cell source = CurrentGame.GetCell(command, CellType.Source);
+                Cell target = CurrentGame.GetCell(command, CellType.Target);
+                CurrentGame.ApplyMovement(source, target);
+                CurrentGame.AddMovement(new Movement(source.piece, CurrentGame.Turn, source, target, command));
+                return true;
+            }
+            if (CurrentGame.IsSelectCommand(command))
+            {
+                Cell source = CurrentGame.GetCell(command, CellType.Source);
+                CellList validMovements = source.piece != null ? 
+                    source.piece.ValidMovements(CurrentGame.GameBoard.Sets, source.Row, source.Column) :
+                    new CellList();
+                string stringValidMovements = CurrentGame.PrintMovements(validMovements, source);
+                Console.WriteLine(stringValidMovements);
+                Console.ReadKey();
+            }
+            return false;
         }
     }
 }
