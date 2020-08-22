@@ -36,10 +36,5 @@ namespace finalProject_2020_q3.code
             return result;
         }
 
-        private CellList GetValidMovements(Cell[,] piecesOnBoard, int row, int column)
-        {
-            return BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
-        }
-
     }
 }

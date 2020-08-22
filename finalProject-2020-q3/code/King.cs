@@ -26,7 +26,6 @@ namespace finalProject_2020_q3.code
                 CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column])
             };
             return (CellList)response.Where(cell => cell != null).ToList();
-
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
