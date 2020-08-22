@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace finalProject_2020_q3.code
@@ -23,7 +24,8 @@ namespace finalProject_2020_q3.code
             {
                 cellsValid.Add(cellmovement);                
             }
-            return cellsValid;
+            CellList list = (CellList)cellsValid.Where(cell => cell != null).ToList();
+            return (CellList)list.Where(cell => cell.IsEmpty() == true).ToList();
         }
 
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
@@ -46,7 +48,8 @@ namespace finalProject_2020_q3.code
                     cellsValid.Add(cellMovement[i]);
                 }
             }
-            return cellsValid;
+            CellList list = (CellList)cellsValid.Where(cell => cell != null).ToList();
+            return (CellList)list.Where(cell => cell.piece.Color != this.Color).ToList();
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
