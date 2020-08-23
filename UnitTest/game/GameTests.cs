@@ -37,6 +37,10 @@ namespace finalProject_2020_q3.game.Tests
         [DataRow("S(1h)T(8a)")]
         [DataRow("S(1h)T(8h)")]
         [DataRow("S(8h)T(1a)")]
+        [DataRow("P(8a)")]
+        [DataRow("P(1h)")]
+        [DataRow("P(1a)")]
+        [DataRow("P(8h)")]
         public void IsValidCommandTest_ValidLimitValues(string input)
         {
             Game game = new Game();

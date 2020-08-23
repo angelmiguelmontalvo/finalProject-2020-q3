@@ -20,12 +20,15 @@ namespace finalProject_2020_q3.code
             cellmovement = IsTop ?
                 CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]) : 
                 CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]);
-            if (cellmovement.IsEmpty())
+            if (cellmovement != null && cellmovement.IsEmpty())
             {
-                cellsValid.Add(cellmovement);
+                cellsValid.Add(cellmovement);                
             }
-            CellList list = (CellList)cellsValid.Where(cell => cell != null).ToList();
-            return (CellList)list.Where(cell => cell.IsEmpty() == true).ToList();
+            CellList list = new CellList();
+            list.SetList(cellsValid.Where(cell => cell != null).ToList());
+            CellList resultList = new CellList();
+            resultList.SetList(list.Where(cell => cell.IsEmpty() == true).ToList());
+            return resultList;
         }
 
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
@@ -48,8 +51,11 @@ namespace finalProject_2020_q3.code
                     cellsValid.Add(cellMovement[i]);
                 }
             }
-            CellList list = (CellList)cellsValid.Where(cell => cell != null).ToList();
-            return (CellList)list.Where(cell => cell.piece.Color != this.Color).ToList();
+            CellList list = new CellList();
+            list.SetList(cellsValid.Where(cell => cell != null).ToList());
+            CellList resultList = new CellList();
+            resultList.SetList(list.Where(cell => cell.piece.Color != this.Color).ToList());
+            return resultList;
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
