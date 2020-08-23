@@ -100,10 +100,11 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellsUp(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.UpStraight(piecesOnBoard, cell);
-            if (ValidateEmptyCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
-                return GetCellsUp(piecesOnBoard, next, response);
+                return next.IsEmpty() ?
+                GetCellsUp(piecesOnBoard, next, response) : response;
             }
             return response;
         }
@@ -111,10 +112,11 @@ namespace finalProject_2020_q3.code
         private static CellList GetCellsDown(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
             Cell next = CellMovements.DownStraight(piecesOnBoard, cell);
-            if (ValidateEmptyCell(next))
+            if (ValidateCell(next))
             {
                 response.Add(next);
-                return GetCellsDown(piecesOnBoard, next, response);
+                return next.IsEmpty() ?
+                GetCellsDown(piecesOnBoard, next, response) : response;
             }
             return response;
         }
@@ -164,14 +166,6 @@ namespace finalProject_2020_q3.code
             CellList result = new CellList();
             result.SetList(cells.Where(cell => (cell != null)).ToList());
             return result;
-        }
-        private static bool ValidateEmptyCell(Cell cell)
-        {
-            if (cell != null && cell.IsEmpty())
-            {
-                return true;
-            }
-            return false;
         }
 
         private static bool ValidateCell(Cell cell)
