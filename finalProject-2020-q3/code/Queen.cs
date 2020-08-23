@@ -28,7 +28,10 @@ namespace finalProject_2020_q3.code
             CellList diagonal = BoardMovements.AllCellsDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             CellList resultList = new CellList();
             resultList.SetList(cross.Union(diagonal).ToList());
-            return resultList;
+
+            CellList result = new CellList();
+            result.SetList(resultList.Where(cell => (cell.IsEmpty() == true || cell.piece.Color != Color)).ToList());
+            return result;
         }
 
         public override string ToString()

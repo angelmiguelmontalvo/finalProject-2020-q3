@@ -5,9 +5,10 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    public class Pawn : Piece, IPromotion
+    public class Pawn : Piece, IPromotion, IMoved
     {
         public bool IsTop { get; }
+        public bool Moved { get; set; }
 
         public Pawn(Color color, bool isTop) : base(color)
         {
@@ -20,9 +21,13 @@ namespace finalProject_2020_q3.code
             cellmovement = IsTop ?
                 CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]) : 
                 CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]);
-            if (cellmovement != null && cellmovement.IsEmpty())
+            cellsValid.Add(cellmovement);
+            if (!Moved)
             {
-                cellsValid.Add(cellmovement);                
+                Cell secondMovement = cellmovement != null && IsTop ?
+                    CellMovements.DownStraight(piecesOnBoard, cellmovement) :
+                    CellMovements.UpStraight(piecesOnBoard, cellmovement);
+                cellsValid.Add(secondMovement);
             }
             CellList list = new CellList();
             list.SetList(cellsValid.Where(cell => cell != null).ToList());
@@ -38,7 +43,7 @@ namespace finalProject_2020_q3.code
             if (IsTop)
             {
                 cellMovement[0] = CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
-                cellMovement[1] = CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
+                cellMovement[1] = CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             }
             else
             {
@@ -46,7 +51,7 @@ namespace finalProject_2020_q3.code
                 cellMovement[1] = CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             }
             for(int i=0; i<2; i++){
-                if (!(cellMovement[i] is null) && !cellMovement[i].IsEmpty())
+                if (cellMovement[i] != null && !cellMovement[i].IsEmpty())
                 {
                     cellsValid.Add(cellMovement[i]);
                 }
@@ -72,6 +77,11 @@ namespace finalProject_2020_q3.code
         {
             string result = Color == Color.WHITE ? $"pW " : $" pB";
             return result;
+        }
+
+        public bool PiceMoved()
+        {
+            return this.Moved;
         }
     }
 

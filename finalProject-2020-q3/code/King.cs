@@ -26,7 +26,8 @@ namespace finalProject_2020_q3.code
                 CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column])
             };
             CellList resultList = new CellList();
-            resultList.SetList(response.Where(cell => cell != null).ToList());
+            CellList result = new CellList();
+            resultList.SetList(response.Where(cell => cell != null && (cell.IsEmpty() == true || cell.piece.Color != Color)).ToList());
             return resultList;
         }
 

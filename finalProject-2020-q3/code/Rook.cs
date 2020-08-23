@@ -24,7 +24,10 @@ namespace finalProject_2020_q3.code
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            return BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
+            CellList list = BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
+            CellList result = new CellList();
+            result.SetList(list.Where(cell => (cell.IsEmpty() == true || cell.piece.Color != Color)).ToList());
+            return result;
         }
 
         public void Castling(Rook rook, King king)

@@ -121,33 +121,49 @@ namespace finalProject_2020_q3.code
 
         private static CellList LeftAndRight(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
-            response.Add(CellMovements.LeftStraight(piecesOnBoard, cell));
-            response.Add(CellMovements.RightStraight(piecesOnBoard, cell));
+            if (cell != null)
+            {
+                response.Add(CellMovements.LeftStraight(piecesOnBoard, cell));
+                response.Add(CellMovements.RightStraight(piecesOnBoard, cell));
+            }
             return response;
         }
         private static CellList UpAndDown(Cell[,] piecesOnBoard, Cell cell, CellList response)
         {
-            response.Add(CellMovements.UpStraight(piecesOnBoard, cell));
-            response.Add(CellMovements.DownStraight(piecesOnBoard, cell));
+            if (cell != null)
+            {
+                response.Add(CellMovements.UpStraight(piecesOnBoard, cell));
+                response.Add(CellMovements.DownStraight(piecesOnBoard, cell));
+            }
             return response;
         }
 
         public static CellList GetKnightMovement(Cell[,] piecesOnBoard, Cell cell)
         {
             CellList cells = new CellList();
-            Cell verticalDown = CellMovements.DownStraight(piecesOnBoard, CellMovements.DownStraight(piecesOnBoard, cell));
-            Cell verticalUp = CellMovements.UpStraight(piecesOnBoard, CellMovements.UpStraight(piecesOnBoard, cell));
+            if ( CellMovements.DownStraight(piecesOnBoard, cell) != null){
+                Cell verticalDown = CellMovements.DownStraight(piecesOnBoard, CellMovements.DownStraight(piecesOnBoard, cell));
+                LeftAndRight(piecesOnBoard, verticalDown, cells);
+            }
+            if (CellMovements.UpStraight(piecesOnBoard, cell) != null)
+            {
+                Cell verticalUp = CellMovements.UpStraight(piecesOnBoard, CellMovements.UpStraight(piecesOnBoard, cell));
+                LeftAndRight(piecesOnBoard, verticalUp, cells);
+            }
+            if (CellMovements.LeftStraight(piecesOnBoard, cell) != null)
+            {
+                Cell horizontalLeft = CellMovements.LeftStraight(piecesOnBoard, CellMovements.LeftStraight(piecesOnBoard, cell));
+                UpAndDown(piecesOnBoard, horizontalLeft, cells);
+            }
+            if (CellMovements.RightStraight(piecesOnBoard, cell) != null)
+            {
+                Cell horizontalRight = CellMovements.RightStraight(piecesOnBoard, CellMovements.RightStraight(piecesOnBoard, cell));
+                UpAndDown(piecesOnBoard, horizontalRight, cells);
+            }
 
-            Cell horizontalLeft = CellMovements.LeftStraight(piecesOnBoard, CellMovements.LeftStraight(piecesOnBoard, cell));
-            Cell horizontalRight = CellMovements.RightStraight(piecesOnBoard, CellMovements.RightStraight(piecesOnBoard, cell));
-
-            LeftAndRight(piecesOnBoard, verticalDown, cells);
-            LeftAndRight(piecesOnBoard, verticalUp, cells);
-            UpAndDown(piecesOnBoard, horizontalLeft, cells);
-            UpAndDown(piecesOnBoard, horizontalRight, cells);
-            CellList resultList = new CellList();
-            resultList.SetList(cells.Where(cell => !(cell is null)).ToList());
-            return resultList;
+            CellList result = new CellList();
+            result.SetList(cells.Where(cell => (cell != null)).ToList());
+            return result;
         }
         private static bool ValidateEmptyCell(Cell cell)
         {
