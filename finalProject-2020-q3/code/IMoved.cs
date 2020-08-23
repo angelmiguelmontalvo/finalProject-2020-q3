@@ -6,6 +6,6 @@ namespace finalProject_2020_q3.code
 {
     internal interface IMoved
     {
-        public bool PiceMoved();
+        public void PiceMoved(bool move);
     }
 }

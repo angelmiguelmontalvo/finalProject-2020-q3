@@ -103,6 +103,10 @@ namespace finalProject_2020_q3.code
                     return false;
                 }
             }
+            if (sourcePiece is IMoved)
+            {
+                ((IMoved)sourcePiece).PiceMoved(true);
+            }
             return true;
         }
 
@@ -256,6 +260,26 @@ namespace finalProject_2020_q3.code
                 }
             }
             return isPrometed;
+        }
+
+        public bool Castling(Cell king, Cell rook )
+        {
+            if(rook.piece is ICastling && king.piece is ICastling)
+            {
+                Rook rk = (Rook)rook.piece;
+                King kn = (King)king.piece;
+                if (rk.IsAbleTocast() && kn.IsAbleTocast() && rook.GetColumn() == "h")
+                {
+                    if (rook.Row == king.Row && this.Sets[rook.Row, 5].IsEmpty() && this.Sets[rook.Row, 6].IsEmpty())
+                    {
+                        ApplyMovement(king, this.Sets[rook.Row, 6]);
+                        ApplyMovement(rook, this.Sets[rook.Row, 5]);
+                        return true;
+                    }
+                }
+                
+            }
+            return false;
         }
     }
 }

@@ -5,8 +5,9 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    public class Rook : Piece, ICastling
+    public class Rook : Piece, ICastling, IMoved
     {
+        private bool Moved { get; set; } = false;
         public Rook(Color color) : base(color) { }
 
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
@@ -40,5 +41,15 @@ namespace finalProject_2020_q3.code
             string result = Color == Color.WHITE ? $"RW " : $" RB";
             return result;
         }
+        public bool IsAbleTocast()
+        {
+            return !Moved;
+        }
+
+        public void PiceMoved(bool move)
+        {
+            this.Moved = move;
+        }
     }
+
 }

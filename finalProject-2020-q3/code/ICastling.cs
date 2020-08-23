@@ -3,5 +3,8 @@
     internal interface ICastling
     {
         public void Castling(Rook rook, King king);
+
+        public bool IsAbleTocast();
+
     }
 }
