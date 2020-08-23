@@ -12,7 +12,9 @@ namespace finalProject_2020_q3.code
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
         {
             CellList cellList = ValidMovements(piecesOnBoard, row, column);
-            return (CellList)cellList.Where(cell => cell.IsEmpty() == false).ToList();
+            CellList resultList = new CellList();
+            resultList.SetList(cellList.Where(cell => cell.IsEmpty() == false && cell.piece.Color != Color).ToList());
+            return resultList;
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
@@ -24,7 +26,9 @@ namespace finalProject_2020_q3.code
         {
             CellList cross = BoardMovements.AllCrossCells(piecesOnBoard, piecesOnBoard[row, column]);
             CellList diagonal = BoardMovements.AllCellsDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
-            return (CellList)cross.Union(diagonal).ToList();
+            CellList resultList = new CellList();
+            resultList.SetList(cross.Union(diagonal).ToList());
+            return resultList;
         }
 
         public override string ToString()

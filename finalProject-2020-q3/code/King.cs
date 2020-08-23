@@ -25,7 +25,9 @@ namespace finalProject_2020_q3.code
                 CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]),
                 CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column])
             };
-            return (CellList)response.Where(cell => cell != null).ToList();
+            CellList resultList = new CellList();
+            resultList.SetList(response.Where(cell => cell != null).ToList());
+            return resultList;
         }
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
@@ -36,7 +38,9 @@ namespace finalProject_2020_q3.code
         public override CellList AttackMovements(Cell[,] piecesOnBoard, int row, int column)
         {
             CellList cellList = ValidMovements(piecesOnBoard, row, column);
-            return (CellList)cellList.Where(cell => cell.IsEmpty() == false).ToList();
+            CellList resultList = new CellList();
+            resultList.SetList(cellList.Where(cell => cell.IsEmpty() == false).ToList());
+            return resultList;
         }
 
         public override string ToString()
