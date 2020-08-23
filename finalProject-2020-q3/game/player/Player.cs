@@ -17,7 +17,7 @@ namespace finalProject_2020_q3.game
 
         public override string ToString()
         {
-			return $"Player-{PlayerTurn}: {PlayerName} plays with {PlayerColor}";
+			return $"Turn-{PlayerTurn + 1}: {PlayerName} plays with {PlayerColor}";
         }
 
 		public override Boolean Equals(Object playerObject)

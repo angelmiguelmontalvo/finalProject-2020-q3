@@ -29,6 +29,12 @@ namespace finalProject_2020_q3.game
 			Cell king = GameBoard.GetKingCell(Color.WHITE);
 		}
 
+		public void SetTopColor(Color topColor)
+		{
+			this.GameBoard.TopColor = topColor;
+			this.GameBoard.InitPieces();
+		}
+
 		public Boolean IsValidCommand(string command)
 		{
 			var result = Regex.IsMatch(command, CommandRegex);
