@@ -145,8 +145,9 @@ namespace finalProject_2020_q3.code
             LeftAndRight(piecesOnBoard, verticalUp, cells);
             UpAndDown(piecesOnBoard, horizontalLeft, cells);
             UpAndDown(piecesOnBoard, horizontalRight, cells);
-
-            return (CellList)cells.Where(cell => cell != null).ToList();
+            CellList resultList = new CellList();
+            resultList.SetList(cells.Where(cell => !(cell is null)).ToList());
+            return resultList;
         }
         private static bool ValidateEmptyCell(Cell cell)
         {
@@ -160,6 +161,18 @@ namespace finalProject_2020_q3.code
         private static bool ValidateCell(Cell cell)
         {
             return cell != null;
+        }
+
+        private static bool ValidateCellPiece(Cell position, Cell next, int count)
+        {
+            if (count > 0) {
+                return false;
+            }
+            if (next.IsEmpty() == false && next.piece.Color != position.piece.Color)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

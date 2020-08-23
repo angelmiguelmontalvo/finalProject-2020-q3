@@ -64,6 +64,8 @@ namespace finalProject_2020_q3.game
             while (!CurrentGame.GameOver()) {
                 Console.Clear();
                 CurrentGame.GameDrawer.DrawBoard();
+                CurrentGame.SetStatus(CurrentGame.Turn.PlayerColor);
+                Console.WriteLine($"Game status {CurrentGame.StatusToString()}");
                 Console.WriteLine($"Turn of {CurrentGame.Turn.ToString()}");
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
@@ -75,7 +77,11 @@ namespace finalProject_2020_q3.game
                         // If is the movement is a checkmat avoid set next player
                         if (ReadCommand())
                         {
-                            CurrentGame.SetNextPlayer();
+                            CurrentGame.SetStatus(CurrentGame.Turn.PlayerColor);
+                            if (CurrentGame.Status == GameStatus.Draw && CurrentGame.Result == GameResult.Play)
+                            {
+                                CurrentGame.SetNextPlayer();
+                            }
                         }                        
                         break;
                     case "2":
@@ -121,6 +127,10 @@ namespace finalProject_2020_q3.game
                 string stringValidMovements = CurrentGame.PrintMovements(validMovements, source);
                 Console.WriteLine(stringValidMovements);
                 Console.ReadKey();
+                return false;
+            }
+            if (CurrentGame.IsStatusCheck()) {
+                return false;
             }
             return false;
         }

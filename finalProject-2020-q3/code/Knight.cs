@@ -19,7 +19,7 @@ namespace finalProject_2020_q3.code
 
         public override CellList CaptureFreeCells(Cell[,] piecesOnBoard, int row, int column)
         {
-            throw new NotImplementedException();
+            return new CellList();
         }
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)

@@ -46,7 +46,7 @@ namespace finalProject_2020_q3.code
                 cellMovement[1] = CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             }
             for(int i=0; i<2; i++){
-                if (!cellMovement[i].IsEmpty())
+                if (!(cellMovement[i] is null) && !cellMovement[i].IsEmpty())
                 {
                     cellsValid.Add(cellMovement[i]);
                 }

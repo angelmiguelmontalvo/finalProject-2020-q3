@@ -121,21 +121,37 @@ namespace finalProject_2020_q3.code.Tests
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
-        private Board CreateDefaultBoard() 
+        private Board CreateDefaultBoard()
         {
             return new Board();
         }
 
-        private Board CreateBoardMissingOnePiece() 
+        private Board CreateBoardMissingOnePiece()
         {
             Board board = new Board();
             board.Remove("1", "a");
             return board;
         }
 
-        private Piece CreatePawn() 
+        private Piece CreatePawn()
         {
             return new Pawn(Color.WHITE, true);
+        }
+
+        [TestMethod()]
+        public void GetKingCellTest_BlackSet()
+        {
+            Board board = new Board();
+            Cell kingCell = board.GetKingCell(Color.BLACK);
+            Assert.AreEqual("8e", kingCell.ToString(), $"King not found");
+        }
+
+        [TestMethod()]
+        public void GetKingCellTest_WhiteSet()
+        {
+            Board board = new Board();
+            Cell kingCell = board.GetKingCell(Color.WHITE);
+            Assert.AreEqual("1e", kingCell.ToString(), $"King not found");
         }
     }
 }

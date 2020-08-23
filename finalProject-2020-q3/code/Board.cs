@@ -1,5 +1,7 @@
-﻿using System;
+﻿using finalProject_2020_q3.game;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace finalProject_2020_q3.code
@@ -76,13 +78,29 @@ namespace finalProject_2020_q3.code
             return this.Sets[rowInMatrix, columnInMatrix];
         }
 
-        public void ApplyMovement(Cell source, Cell target)
+        public void Rollback(Cell source, Cell target, Piece sourcePiece, Piece targetPiece)
         {
-            Piece piece = RemovePiece(source);
-            if (target.piece != null) {
-                RemovePiece(target);
+            AddPiece(sourcePiece, source);
+            AddPiece(targetPiece, target);
+        }
+
+        public bool ApplyMovement(Cell source, Cell target)
+        {
+            Piece sourcePiece = RemovePiece(source);
+            Piece targetPiece;
+            if (!(target.piece is null)) {
+                targetPiece = RemovePiece(target);
             }
-            AddPiece(piece, target);
+            if(AddPiece(sourcePiece, target))
+            {
+                var status = GetGameStatus(sourcePiece.Color);
+                if (status != GameStatus.Draw)
+                {
+                    Rollback(source, target, sourcePiece, target.piece);
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool AddPiece(Piece piece, Cell cell) {
@@ -161,6 +179,65 @@ namespace finalProject_2020_q3.code
         public String[] CaptureFreeCells(string row, string column)
         {
             return new String[0];
+        }
+
+        public Cell GetKingCell(Color color)
+        {
+            Cell kingCell = null;
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    if (!(Sets[i, j].piece is null) && Sets[i, j].piece.Color == color 
+                        && Sets[i, j].piece is King)
+                    {
+                        kingCell = Sets[i, j];
+                    }
+                }
+            }
+            return kingCell;
+        }
+
+        public CellList GetAllCellAtack(Color color)
+        {
+            CellList cellsToAtack = new CellList();
+            for (var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    if (!(Sets[i,j].piece is null) && Sets[i,j].piece.Color == color)
+                    {
+                        CellList attackCells = Sets[i, j].piece.AttackMovements(Sets, Sets[i, j].Row, Sets[i, j].Column);
+                        foreach (Cell cell in attackCells)
+                        {
+                            cellsToAtack.Add(cell);
+                        }
+                    }
+                }
+            }
+            return cellsToAtack;
+        }
+
+        public GameStatus GetGameStatus(Color color)
+        {
+            GameStatus status = GameStatus.Draw;
+            CellList cellsToAtack = new CellList();
+            List<Cell> kingUnderAttack;
+            if (color == Color.WHITE)
+            {
+                Cell BlackKingCell = GetKingCell(color);
+                cellsToAtack = GetAllCellAtack(Color.BLACK);
+                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(BlackKingCell)).ToList();
+                status = kingUnderAttack.Count > 0 ? GameStatus.WhiteInCheck : GameStatus.Draw;
+            }
+            if (color == Color.BLACK)
+            {
+                Cell BlackKingCell = GetKingCell(color);
+                cellsToAtack = GetAllCellAtack(Color.WHITE);
+                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(BlackKingCell)).ToList();
+                status = kingUnderAttack.Count > 0 ? GameStatus.BlackInCheck : GameStatus.Draw;
+            }
+            return status;
         }
     }
 }
