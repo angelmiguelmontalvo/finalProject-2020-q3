@@ -59,7 +59,7 @@ namespace finalProject_2020_q3.code.Tests
         }
 
         [TestMethod()]
-        // White initial positions
+        //White initial positions
         [DataRow("1", "a", new string[0])]
         [DataRow("1", "b", new string[] { "3a", "3c" })]
         [DataRow("1", "c", new string[0])]
@@ -76,7 +76,7 @@ namespace finalProject_2020_q3.code.Tests
         [DataRow("2", "f", new string[] { "3f", "4f" })]
         [DataRow("2", "g", new string[] { "3g", "4g" })]
         [DataRow("2", "h", new string[] { "3h", "4h" })]
-        // Black initial positions
+        //Black initial positions
         [DataRow("8", "a", new string[0])]
         [DataRow("8", "b", new string[] { "6a", "6c" })]
         [DataRow("8", "c", new string[0])]
@@ -154,7 +154,7 @@ namespace finalProject_2020_q3.code.Tests
             {
                 "3b"
             };
-            string[] actual = board.GetMovements("2", "a");
+            string[] actual = board.AttackMovements("2", "a");
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -164,8 +164,7 @@ namespace finalProject_2020_q3.code.Tests
         {
             Board board = CreateBoardMissingOnePiece();
             string[] expected = new string[0];
-            string[] actual = board.GetMovements("2", "a");
-
+            string[] actual = board.AttackMovements("2", "a");
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
@@ -183,7 +182,7 @@ namespace finalProject_2020_q3.code.Tests
 
         private Piece CreatePawn() 
         {
-            return new Pawn(Color.WHITE, true);
+            return new Pawn(Color.BLACK, true);
         }
         private Board CreateBoardWithPieceIn(string row, string column, PieceType pieceType, Color color)
         {

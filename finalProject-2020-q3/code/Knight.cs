@@ -24,7 +24,10 @@ namespace finalProject_2020_q3.code
 
         public override CellList ValidMovements(Cell[,] piecesOnBoard, int row, int column)
         {
-            return BoardMovements.GetKnightMovement(piecesOnBoard, piecesOnBoard[row, column]);
+            CellList list = BoardMovements.GetKnightMovement(piecesOnBoard, piecesOnBoard[row, column]);
+            CellList result = new CellList();
+            result.SetList(list.Where(cell => (cell.IsEmpty() || cell.piece.Color != Color)).ToList());
+            return result;
         }
 
         public override string ToString()
