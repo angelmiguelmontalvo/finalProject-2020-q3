@@ -103,19 +103,11 @@ namespace finalProject_2020_q3.code
                     return false;
                 }
             }
-<<<<<<< HEAD
-            return true;
-=======
-            Piece pieceToAdd = promotedType == PieceType.NONE ? piece : (piece as Pawn).Promote(promotedType);
-            AddPiece(pieceToAdd, target);
-            if (piece is IMoved)
+            if (sourcePiece is IMoved)
             {
-                ((IMoved)piece).PiceMoved(true);
+                ((IMoved)sourcePiece).PiceMoved(true);
             }
-<<<<<<< HEAD
->>>>>>> 965e264... feature - castling
-=======
->>>>>>> 965e264695e46055249b28f76d5f461be2fb0ebe
+            return true;
         }
 
         public bool AddPiece(Piece piece, Cell cell) {
