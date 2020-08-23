@@ -79,9 +79,9 @@ namespace finalProject_2020_q3.code
             return result;
         }
 
-        public bool PiceMoved()
+        public void PiceMoved(bool moved)
         {
-            return this.Moved;
+            this.Moved = moved;
         }
     }
 

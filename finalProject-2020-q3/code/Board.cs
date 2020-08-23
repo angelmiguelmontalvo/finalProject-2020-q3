@@ -103,7 +103,16 @@ namespace finalProject_2020_q3.code
                     return false;
                 }
             }
+<<<<<<< HEAD
             return true;
+=======
+            Piece pieceToAdd = promotedType == PieceType.NONE ? piece : (piece as Pawn).Promote(promotedType);
+            AddPiece(pieceToAdd, target);
+            if (piece is IMoved)
+            {
+                ((IMoved)piece).PiceMoved(true);
+            }
+>>>>>>> 965e264... feature - castling
         }
 
         public bool AddPiece(Piece piece, Cell cell) {
@@ -256,6 +265,26 @@ namespace finalProject_2020_q3.code
                 }
             }
             return isPrometed;
+        }
+
+        public bool Castling(Cell king, Cell rook )
+        {
+            if(rook.piece is ICastling && king.piece is ICastling)
+            {
+                Rook rk = (Rook)rook.piece;
+                King kn = (King)king.piece;
+                if (rk.IsAbleTocast() && kn.IsAbleTocast() && rook.GetColumn() == "h")
+                {
+                    if (rook.Row == king.Row && this.Sets[rook.Row, 5].IsEmpty() && this.Sets[rook.Row, 6].IsEmpty())
+                    {
+                        ApplyMovement(king, this.Sets[rook.Row, 6]);
+                        ApplyMovement(rook, this.Sets[rook.Row, 5]);
+                        return true;
+                    }
+                }
+                
+            }
+            return false;
         }
     }
 }
