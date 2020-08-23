@@ -76,13 +76,14 @@ namespace finalProject_2020_q3.code
             return this.Sets[rowInMatrix, columnInMatrix];
         }
 
-        public void ApplyMovement(Cell source, Cell target)
+        public void ApplyMovement(Cell source, Cell target, PieceType promotedType = PieceType.NONE)
         {
             Piece piece = RemovePiece(source);
             if (target.piece != null) {
                 RemovePiece(target);
             }
-            AddPiece(piece, target);
+            Piece pieceToAdd = promotedType == PieceType.NONE ? piece : (piece as Pawn).Promote(promotedType);
+            AddPiece(pieceToAdd, target);
         }
 
         public bool AddPiece(Piece piece, Cell cell) {
@@ -140,7 +141,6 @@ namespace finalProject_2020_q3.code
             }
             return movements;
         }
-
         public String[] AttackMovements(string row, string column)
         {
             string[] attackMovements = new string[0];
@@ -161,6 +161,21 @@ namespace finalProject_2020_q3.code
         public String[] CaptureFreeCells(string row, string column)
         {
             return new String[0];
+        }
+        public bool IsPromotion(Cell source, Cell target)
+        {
+            bool isPrometed = false;
+            Piece piece = source.piece;
+            if (piece is Pawn)
+            {
+                Pawn pawn = piece as Pawn;
+                int lastRow = pawn.IsTop ? 0 : 7;
+                if (target.Row == lastRow)
+                {
+                    isPrometed = true;
+                }
+            }
+            return isPrometed;
         }
     }
 }
