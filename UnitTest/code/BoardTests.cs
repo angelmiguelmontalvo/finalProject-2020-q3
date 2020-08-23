@@ -53,9 +53,9 @@ namespace finalProject_2020_q3.code.Tests
         public void Remove_ReturnsEmptyPiece_IfPieceNotExists()
         {
             Board board = CreateDefaultBoard();
-
             Piece actual = board.Remove("5", "a");
-            Assert.IsTrue(actual.GetType() == typeof(Piece));
+            Assert.IsTrue(actual == null);
+            //Assert.IsTrue(actual.GetType().IsSubclassOf(typeof(Piece)));
         }
 
         [TestMethod()]
@@ -105,13 +105,13 @@ namespace finalProject_2020_q3.code.Tests
         [DataRow(PieceType.ROOK, Color.WHITE, "5", "d", new string[] { "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h" })]
         [DataRow(PieceType.ROOK, Color.BLACK, "5", "d", new string[] { "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h" })]
         [DataRow(PieceType.KNIGHT, Color.WHITE, "5", "d", new string[] { "6b", "4b", "6f", "4f", "3c", "3e" })]
-        [DataRow(PieceType.KNIGHT, Color.BLACK, "5", "d", new string[] { "6b", "4b", "6f", "4f", "3c", "3e" })]
-        [DataRow(PieceType.BISHOP, Color.WHITE, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f" })]
-        [DataRow(PieceType.BISHOP, Color.BLACK, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f" })]
-        [DataRow(PieceType.QUEEN, Color.WHITE, "5", "d", new string[] { "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h", "6c", "6e", "4c", "3b", "4e", "3f" })]
-        [DataRow(PieceType.QUEEN, Color.BLACK, "5", "d", new string[] { "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h", "6c", "6e", "4c", "3b", "4e", "3f" })]
-        [DataRow(PieceType.KING, Color.WHITE, "5", "d", new string[] { "5c", "5e", "4c", "4d", "4e" })]
-        [DataRow(PieceType.KING, Color.BLACK, "4", "d", new string[] { "4c", "4e", "5c", "5d", "5e" })]
+        [DataRow(PieceType.KNIGHT, Color.BLACK, "5", "d", new string[] { "6b", "4b", "6f", "4f", "3c", "3e", "7c", "7e" })]
+        [DataRow(PieceType.BISHOP, Color.WHITE, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f", "2g","2a" })]
+        [DataRow(PieceType.BISHOP, Color.BLACK, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f", "7b", "7f" })]
+        [DataRow(PieceType.QUEEN, Color.WHITE, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f", "2g", "2a", "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h" })]
+        [DataRow(PieceType.QUEEN, Color.BLACK, "5", "d", new string[] { "6c", "6e", "4c", "3b", "4e", "3f", "7b", "7f", "6d", "4d", "3d", "5a", "5b", "5c", "5e", "5f", "5g", "5h" })]
+        [DataRow(PieceType.KING, Color.WHITE, "5", "d", new string[] { "5c", "5e", "4c", "4d", "4e", "6c", "6d", "6e" })]
+        [DataRow(PieceType.KING, Color.BLACK, "4", "d", new string[] { "4c", "4e", "5c", "5d", "5e", "3c", "3d", "3e" })]
         public void GetMovements_ReturnsEmptyCells_NoPiecesInTheMiddle(PieceType pieceType, Color color, string row, string column, string[] expected)
         {
             Board board = CreateBoardWithPieceIn(row, column, pieceType, color);
@@ -140,7 +140,7 @@ namespace finalProject_2020_q3.code.Tests
             Board board = CreateBoardMissingOnePiece();
             board.Add(CreatePawn(), "3", "a");
             string[] expected = new string[0];
-            string[] actual = board.GetMovements("2", "a");
+            string[] actual = board.GetMovements("4", "a");
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -182,7 +182,8 @@ namespace finalProject_2020_q3.code.Tests
 
         private Piece CreatePawn() 
         {
-            return new Pawn(Color.BLACK, true);
+            bool is_top = true;
+            return new Pawn(Color.BLACK, is_top);
         }
         private Board CreateBoardWithPieceIn(string row, string column, PieceType pieceType, Color color)
         {

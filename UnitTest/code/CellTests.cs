@@ -19,15 +19,6 @@ namespace finalProject_2020_q3.code.Tests
         }
 
         [TestMethod()]
-        public void Test_GetColumn()
-        {
-            string cell = "1a";
-            Cell testCell = new Cell(0, 0);
-            int result = testCell.GetRow(cell);
-            Assert.AreEqual(0, result, $"{cell} cell is not par of board");
-        }
-
-        [TestMethod()]
         [DataRow("1a")]
         [DataRow("2a")]
         [DataRow("3a")]
