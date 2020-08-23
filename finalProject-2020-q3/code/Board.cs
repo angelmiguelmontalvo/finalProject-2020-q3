@@ -24,7 +24,7 @@ namespace finalProject_2020_q3.code
             this.PiecesOnBoard = 16;
             InitPieces();
         }
-        private void InitPieces()
+        public void InitPieces()
         {
             FillBoardCells();
             FillSet(TopColor, true);
@@ -46,13 +46,17 @@ namespace finalProject_2020_q3.code
             int majorsPosition;
             if (isTop)
             {
-                pawnsPosition = 6;
-                majorsPosition = 7;
+                //pawnsPosition = 6;
+                //majorsPosition = 7;
+                pawnsPosition = 1;
+                majorsPosition = 0;
             }
             else
             {
-                pawnsPosition = 1;
-                majorsPosition = 0;
+                //pawnsPosition = 1;
+                //majorsPosition = 0;
+                pawnsPosition = 6;
+                majorsPosition = 7;
             }
 
             for (int i = 0; i < 8; i++)

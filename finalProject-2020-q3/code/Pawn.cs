@@ -19,14 +19,14 @@ namespace finalProject_2020_q3.code
             CellList cellsValid = new CellList();
             Cell cellmovement;
             cellmovement = IsTop ?
-                CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]) : 
-                CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]);
+                CellMovements.UpStraight(piecesOnBoard, piecesOnBoard[row, column]) :
+                CellMovements.DownStraight(piecesOnBoard, piecesOnBoard[row, column]);
             cellsValid.Add(cellmovement);
             if (!Moved)
             {
                 Cell secondMovement = cellmovement != null && IsTop ?
-                    CellMovements.DownStraight(piecesOnBoard, cellmovement) :
-                    CellMovements.UpStraight(piecesOnBoard, cellmovement);
+                    CellMovements.UpStraight(piecesOnBoard, cellmovement):
+                    CellMovements.DownStraight(piecesOnBoard, cellmovement);
                 cellsValid.Add(secondMovement);
             }
             CellList list = new CellList();
@@ -42,13 +42,13 @@ namespace finalProject_2020_q3.code
             Cell[] cellMovement = new Cell[2];
             if (IsTop)
             {
-                cellMovement[0] = CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
-                cellMovement[1] = CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
+                cellMovement[0] = CellMovements.UpLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
+                cellMovement[1] = CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             }
             else
             {
-                cellMovement[0] = CellMovements.UpLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
-                cellMovement[1] = CellMovements.UpRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
+                cellMovement[0] = CellMovements.DownLeftDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
+                cellMovement[1] = CellMovements.DownRightDiagonal(piecesOnBoard, piecesOnBoard[row, column]);
             }
             for(int i=0; i<2; i++){
                 if (cellMovement[i] != null && !cellMovement[i].IsEmpty())
