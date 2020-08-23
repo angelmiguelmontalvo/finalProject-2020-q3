@@ -144,6 +144,6 @@ namespace finalProject_2020_q3.game
 				builder.Append($"\nS({source.ToString()})T({target.ToString()})");
 			}
 			return builder.ToString();
-        }
+		}
 	}
 }
