@@ -20,5 +20,13 @@ namespace finalProject_2020_q3.game
                 this.Add(player1);
             }
         }
+
+        public Player GetPlayer(Color color)
+        {
+            if (color == Color.WHITE) {
+                return this[0];
+            }
+            return this[1];
+        }
     }    
 }

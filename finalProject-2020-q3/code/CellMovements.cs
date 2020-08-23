@@ -9,41 +9,72 @@ namespace finalProject_2020_q3.code
     {
         public static Cell UpRightDiagonal(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row + 1, position.Column + 1);
         }
 
         public static Cell UpLeftDiagonal(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row + 1, position.Column - 1);
         }
 
         public static Cell DownRightDiagonal(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row - 1, position.Column + 1);
         }
 
         public static Cell DownLeftDiagonal(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row - 1, position.Column - 1);
         }
 
         public static Cell DownStraight(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null) {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row -1, position.Column);
         }
 
         public static Cell UpStraight(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row +1, position.Column);
         }
 
         public static Cell LeftStraight(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row, position.Column -1);
         }
 
         public static Cell RightStraight(Cell[,] piecesOnBoard, Cell position)
         {
+            if (position is null)
+            {
+                return null;
+            }
             return ReturnCellInPosition(piecesOnBoard, position.Row, position.Column + 1);
         }
 

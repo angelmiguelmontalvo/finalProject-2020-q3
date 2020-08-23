@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Linq;
 
 namespace finalProject_2020_q3.game
 {
@@ -25,6 +26,7 @@ namespace finalProject_2020_q3.game
 			Result = GameResult.Play;
 			Status = GameStatus.Draw;
 			GameDrawer = new Drawer(GameBoard);
+			Cell king = GameBoard.GetKingCell(Color.WHITE);
 		}
 
 		public Boolean IsValidCommand(string command)
@@ -144,7 +146,7 @@ namespace finalProject_2020_q3.game
 
 		public bool IsStatusCheck()
         {
-			return false;
+			return Status != GameStatus.Draw;
         }
 
 		public void SetFirstTurn()
@@ -187,6 +189,32 @@ namespace finalProject_2020_q3.game
 				builder.Append($"\nS({source.ToString()})T({target.ToString()})");
 			}
 			return builder.ToString();
+		}
+
+		public void SetStatus(Color color)
+        {
+			Status = GameBoard.GetGameStatus(color);
+        }
+
+		public string StatusToString() {
+			StringBuilder result = new StringBuilder();
+			Player player;
+			switch (Status)
+			{
+				case GameStatus.Draw:
+					break;
+				case GameStatus.BlackInCheck:
+					player = GamePlayers.GetPlayer(Color.BLACK);
+					result.Append($"Player {player.ToString()} is in check");
+					break;
+				case GameStatus.WhiteInCheck:
+				    player = GamePlayers.GetPlayer(Color.WHITE);
+					result.Append($"Player {player.ToString()} is in check");
+					break;
+				default:
+					break;
+			}
+			return result.ToString();
 		}
 	}
 }

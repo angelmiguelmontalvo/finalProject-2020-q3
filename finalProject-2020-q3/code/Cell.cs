@@ -105,5 +105,9 @@ namespace finalProject_2020_q3.code
             return piece == null;
         }
 
+        public bool CompareCell(Cell cell)
+        {
+            return !(cell is null) && cell.Row == Row && cell.Column == Column;
+        }
     }
 }

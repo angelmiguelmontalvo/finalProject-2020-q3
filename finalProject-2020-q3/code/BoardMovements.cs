@@ -178,5 +178,17 @@ namespace finalProject_2020_q3.code
         {
             return cell != null;
         }
+
+        private static bool ValidateCellPiece(Cell position, Cell next, int count)
+        {
+            if (count > 0) {
+                return false;
+            }
+            if (next.IsEmpty() == false && next.piece.Color != position.piece.Color)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
