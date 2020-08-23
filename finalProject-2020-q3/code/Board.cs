@@ -112,7 +112,10 @@ namespace finalProject_2020_q3.code
             {
                 ((IMoved)piece).PiceMoved(true);
             }
+<<<<<<< HEAD
 >>>>>>> 965e264... feature - castling
+=======
+>>>>>>> 965e264695e46055249b28f76d5f461be2fb0ebe
         }
 
         public bool AddPiece(Piece piece, Cell cell) {
