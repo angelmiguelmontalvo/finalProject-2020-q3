@@ -4,7 +4,7 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    class PieceFactory
+    public class PieceFactory
     {
         public static Piece BuildPieces(PieceType pieceType, Color color, bool isTop = true)
         {
