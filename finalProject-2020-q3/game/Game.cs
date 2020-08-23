@@ -97,10 +97,49 @@ namespace finalProject_2020_q3.game
 
 		public void ApplyMovement(Cell source, Cell target)
         {
-			GameBoard.ApplyMovement(source, target);
+			if (GameBoard.IsPromotion(source, target))
+			{
+				PieceType promotedPieceType = ReadPromotedPiece();
+				GameBoard.ApplyMovement(source, target, promotedPieceType);
+			}
+			else
+			{
+				GameBoard.ApplyMovement(source, target);
+			}
         }
 
-		public Boolean IsValidMovement()
+        private PieceType ReadPromotedPiece()
+		{
+			string optionsPattern = @"^[1-4]$";
+			Dictionary<string, PieceType> promoteOptions = new Dictionary<string, PieceType>()
+            {
+				{ "1", PieceType.BISHOP },
+				{ "2", PieceType.KNIGHT },
+				{ "3", PieceType.ROOK },
+				{ "4", PieceType.QUEEN }
+			};
+            ShowPromotionOptions();
+			string selectedOption = Console.ReadLine();
+			while (!Regex.IsMatch(selectedOption, optionsPattern))
+			{
+				Console.WriteLine("Bad command try again");
+				selectedOption = Console.ReadLine();
+			}
+			return promoteOptions[selectedOption];
+		}
+
+        private void ShowPromotionOptions()
+		{
+			Console.WriteLine("--------------------------------");
+			Console.WriteLine("- Select piece to be promoted: -");
+			Console.WriteLine("1. Bishop");
+			Console.WriteLine("2. Knight");
+			Console.WriteLine("3. Rook");
+			Console.WriteLine("4. Queen");
+			Console.WriteLine("--------------------------------");
+		}
+
+        public Boolean IsValidMovement()
 		{
 			return true;
 		}

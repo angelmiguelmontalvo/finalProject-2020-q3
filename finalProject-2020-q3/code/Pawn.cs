@@ -7,7 +7,7 @@ namespace finalProject_2020_q3.code
 {
     public class Pawn : Piece, IPromotion
     {
-        private readonly bool IsTop;
+        public bool IsTop { get; }
 
         public Pawn(Color color, bool isTop) : base(color)
         {

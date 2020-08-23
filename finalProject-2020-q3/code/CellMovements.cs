@@ -5,7 +5,7 @@ using System.Text;
 
 namespace finalProject_2020_q3.code
 {
-    class CellMovements
+    public class CellMovements
     {
         public static Cell UpRightDiagonal(Cell[,] piecesOnBoard, Cell position)
         {

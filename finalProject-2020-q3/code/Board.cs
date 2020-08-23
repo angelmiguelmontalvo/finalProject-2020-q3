@@ -84,14 +84,17 @@ namespace finalProject_2020_q3.code
             AddPiece(targetPiece, target);
         }
 
-        public bool ApplyMovement(Cell source, Cell target)
+        public bool ApplyMovement(Cell source, Cell target, PieceType promotedType = PieceType.NONE)
         {
             Piece sourcePiece = RemovePiece(source);
             Piece targetPiece;
             if (!(target.piece is null)) {
                 targetPiece = RemovePiece(target);
             }
-            if(AddPiece(sourcePiece, target))
+            Piece pieceToAdd = promotedType == PieceType.NONE ? 
+                sourcePiece : 
+                (sourcePiece as Pawn).Promote(promotedType);
+            if (AddPiece(pieceToAdd, target))
             {
                 var status = GetGameStatus(sourcePiece.Color);
                 if (status != GameStatus.Draw)
@@ -158,7 +161,6 @@ namespace finalProject_2020_q3.code
             }
             return movements;
         }
-
         public String[] AttackMovements(string row, string column)
         {
             string[] attackMovements = new string[0];
@@ -238,6 +240,22 @@ namespace finalProject_2020_q3.code
                 status = kingUnderAttack.Count > 0 ? GameStatus.BlackInCheck : GameStatus.Draw;
             }
             return status;
+        }
+
+        public bool IsPromotion(Cell source, Cell target)
+        {
+            bool isPrometed = false;
+            Piece piece = source.piece;
+            if (piece is Pawn)
+            {
+                Pawn pawn = piece as Pawn;
+                int lastRow = pawn.IsTop ? 0 : 7;
+                if (target.Row == lastRow)
+                {
+                    isPrometed = true;
+                }
+            }
+            return isPrometed;
         }
     }
 }
