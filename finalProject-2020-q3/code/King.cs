@@ -39,7 +39,7 @@ namespace finalProject_2020_q3.code
         {
             CellList cellList = ValidMovements(piecesOnBoard, row, column);
             CellList resultList = new CellList();
-            resultList.SetList(cellList.Where(cell => cell.IsEmpty() == false).ToList());
+            resultList.SetList(cellList.Where(cell => cell.IsEmpty() == false && cell.piece.Color != Color).ToList());
             return resultList;
         }
 

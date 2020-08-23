@@ -37,8 +37,7 @@ namespace finalProject_2020_q3.game
 				result = String.Equals(source, target, StringComparison.OrdinalIgnoreCase);
 				return !result;
 			} 
-			result = Regex.IsMatch(command, SelectRegex);
-			return result;
+			return Regex.IsMatch(command, SelectRegex);
 		}
 
 		public Boolean IsSelectCommand(string command)
@@ -103,6 +102,11 @@ namespace finalProject_2020_q3.game
 		{
 			return true;
 		}
+
+		public bool IsStatusCheck()
+        {
+			return false;
+        }
 
 		public void SetFirstTurn()
 		{
