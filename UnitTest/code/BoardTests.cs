@@ -121,6 +121,27 @@ namespace finalProject_2020_q3.code.Tests
         }
 
         [TestMethod()]
+        [DataRow(PieceType.KING, Color.WHITE, "4", "d", "5", "d", new string[] { "5d" })]
+        [DataRow(PieceType.KING, Color.BLACK, "4", "d", "5", "d", new string[] { "5d" })]
+        [DataRow(PieceType.ROOK, Color.WHITE, "5", "a", "5", "d", new string[] { "5d", "7a" })]
+        [DataRow(PieceType.ROOK, Color.BLACK, "5", "a", "5", "d", new string[] { "5d", "2a" })]
+        [DataRow(PieceType.KNIGHT, Color.WHITE, "6", "d", "5", "f", new string[] { "5f", "8c", "8e", "7b", "7f" })]
+        [DataRow(PieceType.KNIGHT, Color.BLACK, "3", "d", "5", "e", new string[] { "5e", "1c", "1e", "2b", "2f" })]
+        [DataRow(PieceType.BISHOP, Color.WHITE, "5", "d", "4", "e", new string[] { "4e", "7b", "7f"})]
+        [DataRow(PieceType.BISHOP, Color.BLACK, "4", "d", "5", "e", new string[] { "5e", "2b", "2f"})]
+        [DataRow(PieceType.QUEEN, Color.WHITE, "5", "d", "5", "e", new string[] { "5e", "7b", "7d", "7f"})]
+        [DataRow(PieceType.QUEEN, Color.BLACK, "4", "d", "4", "e", new string[] { "4e", "2b", "2d", "2f"})]
+        [DataRow(PieceType.PAWN, Color.WHITE, "5", "d", "6", "e", new string[] { "6e"})]
+        [DataRow(PieceType.PAWN, Color.BLACK, "4", "d", "3", "e", new string[] { "3e"})]
+        public void GetAttackMovements_ReturnsCells_OpponentsInRange(PieceType pieceType, Color color, string row, string column, string opponentRow, string opponentColumn, string[] expected)
+        {
+            Board board = CreateBoardWithOpponentPieces(row, column, pieceType, color, opponentRow, opponentColumn);
+            string[] actual = board.AttackMovements(row, column);
+
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [TestMethod()]
         public void GetMovements_ReturnsPositions_IfThereAreObstacles()
         {
             Board board = CreateBoardMissingOnePiece();
@@ -192,5 +213,16 @@ namespace finalProject_2020_q3.code.Tests
             board.Add(PieceFactory.BuildPieces(pieceType, color), row, column);
             return board;
         }
+        private Board CreateBoardWithOpponentPieces(string row, string column, PieceType pieceType, Color color, string opponentRow, string opponentColumn)
+        {
+            Board board = new Board(Color.BLACK);
+            board.Remove("1", "a");
+            board.Remove("8", "a");
+            board.Add(PieceFactory.BuildPieces(pieceType, color), row, column);
+            Color opponentColor = color == Color.BLACK? Color.WHITE: Color.BLACK;
+            board.Add(PieceFactory.BuildPieces(PieceType.PAWN, opponentColor), opponentRow, opponentColumn);
+            return board;
+        }
+
     }
 }
