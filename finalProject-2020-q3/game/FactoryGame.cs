@@ -99,6 +99,7 @@ namespace finalProject_2020_q3.game
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
                 Console.WriteLine("3. More time");
+                Console.WriteLine("4. Restart game");
                 string option = Console.ReadLine();
                 switch (option)
                 {
@@ -121,6 +122,9 @@ namespace finalProject_2020_q3.game
                     case "3":
                         Console.WriteLine("Waiting....");
                         Console.ReadKey();
+                        break;
+                    case "4":
+                        CurrentGame.Reset();
                         break;
                     default:
                         Console.WriteLine("Bad option");
