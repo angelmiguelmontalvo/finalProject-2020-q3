@@ -15,22 +15,25 @@ namespace finalProject_2020_q3.code
         };
         public Color TopColor { get; set; }
         public Cell[,] Sets { get; }
+        private Cell[,] CloneSets { get; set; }
         private int PiecesOnBoard;
-
+        public GameResult Result;
         public Board(Color topColor = Color.WHITE)
         {
             this.TopColor = topColor;
             this.Sets = new Cell[8, 8];
+            this.CloneSets = new Cell[8, 8];
             this.PiecesOnBoard = 16;
+            this.Result = GameResult.Play;
             InitPieces();
         }
         public void InitPieces()
         {
             FillBoardCells();
             FillSet(TopColor, true);
-            FillSet(TopColor == Color.BLACK? Color.WHITE: Color.BLACK, false);
+            FillSet(TopColor == Color.BLACK ? Color.WHITE : Color.BLACK, false);
         }
-        private void FillBoardCells() 
+        private void FillBoardCells()
         {
             for (int i = 0; i < 8; i++)
             {
@@ -75,35 +78,44 @@ namespace finalProject_2020_q3.code
 
         public Cell GetCell(string cell)
         {
-            string rowString = cell.Substring(0,1);
+            string rowString = cell.Substring(0, 1);
             string columnString = cell.Substring(1);
             int rowInMatrix = positions[rowString];
             int columnInMatrix = positions[columnString];
             return this.Sets[rowInMatrix, columnInMatrix];
         }
 
-        public void Rollback(Cell source, Cell target, Piece sourcePiece, Piece targetPiece)
+        public void Rollback(Cell source, Cell target, Piece sourcePiece, Piece targetPiece, Cell[,] sets)
         {
-            AddPiece(sourcePiece, source);
-            AddPiece(targetPiece, target);
+            AddPiece(sourcePiece, source, sets);
+            AddPiece(targetPiece, target, sets);
         }
 
         public bool ApplyMovement(Cell source, Cell target, PieceType promotedType = PieceType.NONE)
         {
-            Piece sourcePiece = RemovePiece(source);
+           return ApplyMovementSet(source, target, Sets, promotedType);
+        }
+
+        public bool ApplyMovementSet(Cell source, Cell target, Cell[,] sets, PieceType promotedType = PieceType.NONE)
+        {
+            Piece sourcePiece = RemovePiece(source, sets);
+            if (sourcePiece is null)
+            {
+                return false;
+            }
             Piece targetPiece;
             if (!(target.piece is null)) {
-                targetPiece = RemovePiece(target);
+                targetPiece = RemovePiece(target, sets);
             }
-            Piece pieceToAdd = promotedType == PieceType.NONE ? 
-                sourcePiece : 
+            Piece pieceToAdd = promotedType == PieceType.NONE ?
+                sourcePiece :
                 (sourcePiece as Pawn).Promote(promotedType);
-            if (AddPiece(pieceToAdd, target))
+            if (AddPiece(pieceToAdd, target, sets))
             {
-                var status = GetGameStatus(sourcePiece.Color);
+                var status = GetGameStatus(sourcePiece.Color, sets);
                 if (status != GameStatus.Draw)
                 {
-                    Rollback(source, target, sourcePiece, target.piece);
+                    Rollback(source, target, sourcePiece, target.piece, sets);
                     return false;
                 }
             }
@@ -114,11 +126,11 @@ namespace finalProject_2020_q3.code
             return true;
         }
 
-        public bool AddPiece(Piece piece, Cell cell) {
-            return Add(piece, cell.GetRow(), cell.GetColumn());
+        public bool AddPiece(Piece piece, Cell cell, Cell[,] sets) {
+            return Add(piece, cell.GetRow(), cell.GetColumn(), sets);
         }
-        
-        public bool Add(Piece piece, string row, string column)
+
+        public bool Add(Piece piece, string row, string column, Cell[,] sets)
         {
             bool result = false;
             if (positions.ContainsKey(row) && positions.ContainsKey(column))
@@ -127,7 +139,7 @@ namespace finalProject_2020_q3.code
                 {
                     int rowInMatrix = positions[row];
                     int columnInMatrix = positions[column];
-                    this.Sets[rowInMatrix, columnInMatrix].piece = piece;
+                    sets[rowInMatrix, columnInMatrix].piece = piece;
                     this.PiecesOnBoard++;
                     result = true;
                 }
@@ -135,11 +147,11 @@ namespace finalProject_2020_q3.code
             return result;
         }
 
-        public Piece RemovePiece(Cell cell)
+        public Piece RemovePiece(Cell cell, Cell[,] sets)
         {
-            return Remove(cell.GetRow(), cell.GetColumn());
+            return Remove(cell.GetRow(), cell.GetColumn(), sets);
         }
-        public Piece Remove(string row, string column)
+        public Piece Remove(string row, string column, Cell[,] sets)
         {
             Piece removedPiece = null;
             if (positions.ContainsKey(row) && positions.ContainsKey(column))
@@ -147,14 +159,14 @@ namespace finalProject_2020_q3.code
                 int rowInMatrix = positions[row];
                 int columnInMatrix = positions[column];
                 removedPiece = this.Sets[rowInMatrix, columnInMatrix].piece;
-                this.Sets[rowInMatrix, columnInMatrix].RemovePiece();
+                sets[rowInMatrix, columnInMatrix].RemovePiece();
                 this.PiecesOnBoard--;
             }
             return removedPiece;
         }
         public string[] GetMovements(string row, string column)
         {
-            string[] movements= new string[0];
+            string[] movements = new string[0];
             if (positions.ContainsKey(row) && positions.ContainsKey(column))
             {
                 int rowInMatrix = positions[row];
@@ -191,14 +203,14 @@ namespace finalProject_2020_q3.code
             return new String[0];
         }
 
-        public Cell GetKingCell(Color color)
+        public Cell GetKingCell(Color color, Cell[,] Sets)
         {
             Cell kingCell = null;
             for (var i = 0; i < 8; i++)
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (!(Sets[i, j].piece is null) && Sets[i, j].piece.Color == color 
+                    if (!(Sets[i, j].piece is null) && Sets[i, j].piece.Color == color
                         && Sets[i, j].piece is King)
                     {
                         kingCell = Sets[i, j];
@@ -208,14 +220,14 @@ namespace finalProject_2020_q3.code
             return kingCell;
         }
 
-        public CellList GetAllCellAtack(Color color)
+        public CellList GetAllCellAtack(Color color, Cell[,] Sets)
         {
             CellList cellsToAtack = new CellList();
             for (var i = 0; i < 8; i++)
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    if (!(Sets[i,j].piece is null) && Sets[i,j].piece.Color == color)
+                    if (!(Sets[i, j].piece is null) && Sets[i, j].piece.Color == color)
                     {
                         CellList attackCells = Sets[i, j].piece.AttackMovements(Sets, Sets[i, j].Row, Sets[i, j].Column);
                         foreach (Cell cell in attackCells)
@@ -228,22 +240,22 @@ namespace finalProject_2020_q3.code
             return cellsToAtack;
         }
 
-        public GameStatus GetGameStatus(Color color)
+        public GameStatus GetGameStatus(Color color, Cell[,] Sets)
         {
             GameStatus status = GameStatus.Draw;
             CellList cellsToAtack = new CellList();
             List<Cell> kingUnderAttack;
             if (color == Color.WHITE)
             {
-                Cell BlackKingCell = GetKingCell(color);
-                cellsToAtack = GetAllCellAtack(Color.BLACK);
-                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(BlackKingCell)).ToList();
+                Cell WhiteKingCell = GetKingCell(color, Sets);
+                cellsToAtack = GetAllCellAtack(Color.BLACK, Sets);
+                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(WhiteKingCell)).ToList();
                 status = kingUnderAttack.Count > 0 ? GameStatus.WhiteInCheck : GameStatus.Draw;
             }
             if (color == Color.BLACK)
             {
-                Cell BlackKingCell = GetKingCell(color);
-                cellsToAtack = GetAllCellAtack(Color.WHITE);
+                Cell BlackKingCell = GetKingCell(color, Sets);
+                cellsToAtack = GetAllCellAtack(Color.WHITE, Sets);
                 kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(BlackKingCell)).ToList();
                 status = kingUnderAttack.Count > 0 ? GameStatus.BlackInCheck : GameStatus.Draw;
             }
@@ -266,6 +278,122 @@ namespace finalProject_2020_q3.code
             return isPrometed;
         }
 
+        public GameResult GetGameResult(GameStatus status)
+        {
+            GameResult result = GameResult.Play;
+            GameStatus checkMateStatus = ValidateCheckMate(status);
+            status = checkMateStatus == GameStatus.Draw? status : checkMateStatus;
+            if (status == GameStatus.BlackInCheckMatted) 
+            {
+                result = GameResult.WhiteWin;
+            }
+            if (status== GameStatus.WhiteInCheckMatted)
+            {
+                result = GameResult.BlackWin;
+            }
+            return result;
+        }
+
+        public GameStatus ValidateCheckMate(GameStatus status)
+        {
+            if (status == GameStatus.Draw || status == GameStatus.WhiteInCheckMatted || status == GameStatus.BlackInCheckMatted) {
+                return status;
+            }
+            return RunSimulation(status, Sets);
+        }
+
+        public GameStatus RunSimulation(GameStatus status, Cell[,] sets)
+        {
+            GameStatus checkStatus = status;
+            CloneSets = CloneCells(sets);
+            Color color = status == GameStatus.WhiteInCheck ? Color.WHITE : Color.BLACK;
+            for (var i = 0; i < 8; i++)
+            {
+                if (checkStatus == GameStatus.Draw)
+                {
+                    break;
+                }
+                for (var j = 0; j < 8;  j++)
+                {
+                    if (!(CloneSets[i, j].piece is null)) { 
+                        checkStatus = GetCheckOut(CloneSets[i,j], CloneSets, checkStatus, color);
+                        if (checkStatus == GameStatus.Draw)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            return GetCheckMate(checkStatus);
+        }
+
+        public Cell[,] CloneCells(Cell[,] sets)
+        {
+            for(var i = 0; i < 8; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                {
+                    Cell cloneCell = new Cell(i,j);
+                    cloneCell.piece = sets[i, j].piece;
+                    CloneSets[i, j] = cloneCell;
+                    Console.WriteLine($"{CloneSets[i, j].ToString()}  {CloneSets[i, j].piece} {i} {j}");
+                }
+            }
+            return CloneSets;
+        }
+
+        public GameStatus GetCheckMate(GameStatus status)
+        {
+            GameStatus checkMateStatus = GameStatus.Draw;
+            if (GameStatus.WhiteInCheck == status)
+            {
+                checkMateStatus = GameStatus.WhiteInCheckMatted;
+            }
+            if (GameStatus.BlackInCheck == status)
+            {
+                checkMateStatus = GameStatus.BlackInCheckMatted;
+            }
+            return checkMateStatus;
+        }
+
+        public GameStatus GetCheckOut(Cell cell, Cell[,] sets, GameStatus status, Color color)
+        {
+            GameStatus checkStatus = status;
+            if (cell.piece is null)
+            {
+                return checkStatus;
+            }
+            if (status == GameStatus.BlackInCheck && cell.piece.Color == color)
+            {
+                CellList validMovements = cell.GetValidMovements(sets);
+                foreach (Cell target in validMovements)
+                {
+                    bool posibleMove = ApplyMovementSet(cell, target, sets);
+                    Console.WriteLine(cell.ToString());
+                    Console.WriteLine(target.ToString());
+                    if (posibleMove) {
+                        Rollback(cell, target, cell.piece, target.piece, sets);
+                        checkStatus = GameStatus.Draw;
+                        break;
+                    }
+                }
+            }
+            if (status == GameStatus.WhiteInCheck && cell.piece.Color == color)
+            {
+                CellList validMovements = cell.GetValidMovements(sets);
+                foreach (Cell target in validMovements)
+                {
+                    bool posibleMove = ApplyMovementSet(cell, target, sets);
+                    if (posibleMove)
+                    {
+                        Rollback(cell, target, cell.piece, target.piece, sets);
+                        checkStatus = GameStatus.Draw;
+                        break;
+                    }
+                }
+            }
+            return checkStatus;
+        }
         public bool Castling(Cell king, Cell rook )
         {
             if(rook.piece is ICastling && king.piece is ICastling)
