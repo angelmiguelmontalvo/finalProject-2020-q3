@@ -414,8 +414,9 @@ namespace finalProject_2020_q3.code
             }
             return checkStatus;
         }
-        public bool Castling(Cell king, Cell rook )
+        public bool Castling(Cell king)
         {
+            Cell rook = this.Sets[king.Row, 7];
             if(rook.piece is ICastling && king.piece is ICastling)
             {
                 Rook rk = (Rook)rook.piece;

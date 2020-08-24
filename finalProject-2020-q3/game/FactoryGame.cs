@@ -93,10 +93,11 @@ namespace finalProject_2020_q3.game
                 Console.WriteLine($"Game status {CurrentGame.StatusToString()}");
                 Console.WriteLine($"Turn of {CurrentGame.Turn.ToString()}");
                 Console.WriteLine("1. Set movement");
-                Console.WriteLine("2. Resignation");
-                Console.WriteLine("3. More time");
-                Console.WriteLine("4. Request Draw");
-                Console.WriteLine("5. Restart game");
+                Console.WriteLine("2. Castling");
+                Console.WriteLine("3. Resignation");
+                Console.WriteLine("4. More time");
+                Console.WriteLine("5. Request Draw");
+                Console.WriteLine("6. Restart game");
                 string option = Console.ReadLine();
                 switch (option)
                 {
@@ -114,16 +115,20 @@ namespace finalProject_2020_q3.game
                         }                        
                         break;
                     case "2":
-                        CurrentGame.SetResignation();
+                        CurrentGame.Castling();
+                        Console.ReadKey();
                         break;
                     case "3":
+                        CurrentGame.SetResignation();
+                        break;
+                    case "4":
                         Console.WriteLine("Waiting....");
                         Console.ReadKey();
                         break;
-                    case "4":
+                    case "5":
                         RequestDraw();
                         break;
-                    case "5":
+                    case "6":
                         CurrentGame.Reset();
                         break;
                     default:

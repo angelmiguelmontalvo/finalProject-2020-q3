@@ -276,7 +276,24 @@ namespace finalProject_2020_q3.game
 			GameBoard = new Board();
 			GameDrawer = new Drawer(GameBoard);
 			SetFirstTurn();
-			SetTopColor(this.TopColor);
+			SetTopColor(this.TopColor); 
+		}
+		public void Castling()
+		{
+			Cell king = GameBoard.GetKingCell(Turn.PlayerColor);
+			bool res = GameBoard.Castling(king);
+			string message;
+            if (res){
+				SetNextPlayer();
+				message ="** Castled Sucess **";
+			}
+            else
+            {
+				message = "** No able to castle **";
+			}
+			Console.WriteLine("--------------------------------");
+			Console.WriteLine(message);
+			Console.WriteLine("--------------------------------");
 		}
 	}
 
