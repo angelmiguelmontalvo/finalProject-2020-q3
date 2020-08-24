@@ -33,6 +33,7 @@ namespace finalProject_2020_q3.code
             list.SetList(cellsValid.Where(cell => cell != null).ToList());
             CellList resultList = new CellList();
             resultList.SetList(list.Where(cell => cell.IsEmpty() == true).ToList());
+            resultList.AddRange(EnPassantMovements(piecesOnBoard, row, column));
             return resultList;
         }
 
@@ -82,6 +83,23 @@ namespace finalProject_2020_q3.code
         public void PiceMoved(bool moved)
         {
             this.Moved = moved;
+        }
+
+        public CellList EnPassantMovements(Cell[,] piecesOnBoard, int row, int column)
+        {
+            CellList passantMovements = new CellList();
+            CellList adjacentCells = new CellList();
+            adjacentCells.Add(CellMovements.LeftStraight(piecesOnBoard, piecesOnBoard[row, column]));
+            adjacentCells.Add(CellMovements.RightStraight(piecesOnBoard, piecesOnBoard[row, column]));
+            foreach (var cell in adjacentCells)
+            {
+                if (cell != null && cell.piece is Pawn && cell.piece.Color != this.Color)
+                {
+                    int passantRow = IsTop? cell.Row + 1: cell.Row - 1;
+                    passantMovements.Add(piecesOnBoard[passantRow, cell.Column]);
+                }
+            }
+            return passantMovements;
         }
     }
 

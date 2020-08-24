@@ -60,8 +60,6 @@ namespace finalProject_2020_q3.code.Tests
 
         [TestMethod()]
         //White initial positions
-        [DataRow("2", "a", new string[] { "3a", "4a" })]
-        //
         [DataRow("1", "a", new string[0])]
         [DataRow("1", "b", new string[] { "3a", "3c" })]
         [DataRow("1", "c", new string[0])]
@@ -144,15 +142,45 @@ namespace finalProject_2020_q3.code.Tests
         }
 
         [TestMethod()]
+        [DataRow(PieceType.PAWN, Color.WHITE, "5", "d", "5", "e", new string[] { "6d", "6e" })]
+        [DataRow(PieceType.PAWN, Color.WHITE, "5", "d", "5", "c", new string[] { "6d", "6c" })]
+        [DataRow(PieceType.PAWN, Color.BLACK, "4", "d", "4", "e", new string[] { "3d", "3e" })]
+        [DataRow(PieceType.PAWN, Color.BLACK, "4", "d", "4", "c", new string[] { "3d", "3c" })]
+        public void GetEnPassantMovements_ReturnsCells_IfAdjacentPawn(
+            PieceType pieceType, Color color, string row, string column, string opponentRow, string opponentColumn, string[] expected)
+        {
+            Board board = CreateBoardWithOpponentPieces(row, column, pieceType, color, opponentRow, opponentColumn);
+            string[] actual = board.GetMovements(row, column);
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [TestMethod()]
+        public void GetEnPassantMovements_ReturnsCells_TwoAdjacentPawns()
+        {
+            Board board = CreateBoardMissingTwoPieces();
+            board.Add(CreatePawn(), "4", "c", board.Sets);
+            board.Add(CreatePawn(), "4", "e", board.Sets);
+            string[] expected = new string[]
+            {
+                "5c", "5d", "5e"
+            };
+            board.ApplyMovement(new Cell("2d"), new Cell("4d"));
+            string[] actual = board.GetMovements("4", "d");
+
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [TestMethod()]
         public void GetMovements_ReturnsPositions_IfThereAreObstacles()
         {
             Board board = CreateBoardMissingOnePiece();
-            board.Add(CreatePawn(), "4", "a", board.Sets);
+            board.Add(CreatePawn(), "5", "a", board.Sets);
             string[] expected = new string[]
             {
-                "3a"
+                "4a"
             };
-            string[] actual = board.GetMovements("2", "a");
+            board.ApplyMovement(new Cell("2a"), new Cell("3a"));
+            string[] actual = board.GetMovements("3", "a");
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -200,6 +228,14 @@ namespace finalProject_2020_q3.code.Tests
         {
             Board board = new Board(Color.BLACK);
             board.Remove("1", "a", board.Sets);
+            return board;
+        }
+
+        private Board CreateBoardMissingTwoPieces()
+        {
+            Board board = new Board(Color.BLACK);
+            board.Remove("1", "a", board.Sets);
+            board.Remove("8", "a", board.Sets);
             return board;
         }
 
