@@ -78,9 +78,11 @@ namespace finalProject_2020_q3.game
                         if (ReadCommand())
                         {
                             CurrentGame.SetStatus(CurrentGame.Turn.PlayerColor);
-                            if (CurrentGame.Status == GameStatus.Draw && CurrentGame.Result == GameResult.Play)
+                            CurrentGame.SetResult();
+                            if (CurrentGame.Result == GameResult.Play)
                             {
                                 CurrentGame.SetNextPlayer();
+                                CurrentGame.SetStatus(CurrentGame.Turn.PlayerColor);                               
                             }
                         }                        
                         break;
@@ -102,8 +104,7 @@ namespace finalProject_2020_q3.game
                 CurrentGame.GameDrawer.DrawBoard();
             } else 
             {
-                Console.Clear();
-                Console.WriteLine($"Winner is {CurrentGame.Turn.ToString()}");
+                Console.WriteLine(CurrentGame.ResultToString());
                 CurrentGame.GameDrawer.DrawBoard();
             }
         }

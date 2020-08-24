@@ -16,7 +16,7 @@ namespace finalProject_2020_q3.code.Tests
             Board board = CreateBoardMissingOnePiece();
             Piece piece = CreatePawn();
 
-            bool actual = board.Add(piece, "5", "a");
+            bool actual = board.Add(piece, "5", "a", board.Sets);
             Assert.IsTrue(actual);
         }
 
@@ -26,7 +26,7 @@ namespace finalProject_2020_q3.code.Tests
             Board board = CreateBoardMissingOnePiece();
             Piece piece = CreatePawn();
 
-            bool actual = board.Add(piece, "9", "a");
+            bool actual = board.Add(piece, "9", "a", board.Sets);
             Assert.IsFalse(actual);
         }
 
@@ -36,7 +36,7 @@ namespace finalProject_2020_q3.code.Tests
             Board board = CreateDefaultBoard();
             Piece piece = CreatePawn();
 
-            bool actual = board.Add(piece, "5", "a");
+            bool actual = board.Add(piece, "5", "a", board.Sets);
             Assert.IsFalse(actual);
         }
 
@@ -45,7 +45,7 @@ namespace finalProject_2020_q3.code.Tests
         {
             Board board = CreateDefaultBoard();
 
-            Piece actual = board.Remove("1", "a");
+            Piece actual = board.Remove("1", "a", board.Sets);
             Assert.IsTrue(actual is Rook);
         }
 
@@ -53,7 +53,7 @@ namespace finalProject_2020_q3.code.Tests
         public void Remove_ReturnsEmptyPiece_IfPieceNotExists()
         {
             Board board = CreateDefaultBoard();
-            Piece actual = board.Remove("5", "a");
+            Piece actual = board.Remove("5", "a", board.Sets);
             Assert.IsTrue(actual == null);
             //Assert.IsTrue(actual.GetType().IsSubclassOf(typeof(Piece)));
         }
@@ -124,7 +124,7 @@ namespace finalProject_2020_q3.code.Tests
         public void GetMovements_ReturnsPositions_IfThereAreObstacles()
         {
             Board board = CreateBoardMissingOnePiece();
-            board.Add(CreatePawn(), "4", "a");
+            board.Add(CreatePawn(), "4", "a", board.Sets);
             string[] expected = new string[]
             {
                 "3a"
@@ -138,7 +138,7 @@ namespace finalProject_2020_q3.code.Tests
         public void GetMovements_ReturnsEmpty_IfThereAreObstacles()
         {
             Board board = CreateBoardMissingOnePiece();
-            board.Add(CreatePawn(), "3", "a");
+            board.Add(CreatePawn(), "3", "a", board.Sets);
             string[] expected = new string[0];
             string[] actual = board.GetMovements("4", "a");
 
@@ -149,7 +149,7 @@ namespace finalProject_2020_q3.code.Tests
         public void AttackMovements_ReturnsPositions_IfThereAreOponents()
         {
             Board board = CreateBoardMissingOnePiece();
-            board.Add(CreatePawn(), "3", "b");
+            board.Add(CreatePawn(), "3", "b", board.Sets);
             string[] expected = new string[]
             {
                 "3b"
@@ -176,7 +176,7 @@ namespace finalProject_2020_q3.code.Tests
         private Board CreateBoardMissingOnePiece()
         {
             Board board = new Board();
-            board.Remove("1", "a");
+            board.Remove("1", "a", board.Sets);
             return board;
         }
 
@@ -190,7 +190,7 @@ namespace finalProject_2020_q3.code.Tests
         public void GetKingCellTest_BlackSet()
         {
             Board board = new Board();
-            Cell kingCell = board.GetKingCell(Color.BLACK);
+            Cell kingCell = board.GetKingCell(Color.BLACK, board.Sets);
             Assert.AreEqual("8e", kingCell.ToString(), $"King not found");
         }
 
@@ -198,15 +198,15 @@ namespace finalProject_2020_q3.code.Tests
         public void GetKingCellTest_WhiteSet()
         {
             Board board = new Board();
-            Cell kingCell = board.GetKingCell(Color.WHITE);
+            Cell kingCell = board.GetKingCell(Color.WHITE, board.Sets);
             Assert.AreEqual("1e", kingCell.ToString(), $"King not found");
         }
 
         private Board CreateBoardWithPieceIn(string row, string column, PieceType pieceType, Color color)
         {
             Board board = new Board(Color.BLACK);
-            board.Remove("1", "a");
-            board.Add(PieceFactory.BuildPieces(pieceType, color), row, column);
+            board.Remove("1", "a", board.Sets);
+            board.Add(PieceFactory.BuildPieces(pieceType, color), row, column, board.Sets);
             return board;
         }
     }

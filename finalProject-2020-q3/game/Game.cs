@@ -26,7 +26,7 @@ namespace finalProject_2020_q3.game
 			Result = GameResult.Play;
 			Status = GameStatus.Draw;
 			GameDrawer = new Drawer(GameBoard);
-			Cell king = GameBoard.GetKingCell(Color.WHITE);
+			Cell king = GameBoard.GetKingCell(Color.WHITE, GameBoard.Sets);
 		}
 
 		public Boolean IsValidCommand(string command)
@@ -106,9 +106,9 @@ namespace finalProject_2020_q3.game
 			{
 				GameBoard.ApplyMovement(source, target);
 			}
-        }
+		}
 
-        private PieceType ReadPromotedPiece()
+		private PieceType ReadPromotedPiece()
 		{
 			string optionsPattern = @"^[1-4]$";
 			Dictionary<string, PieceType> promoteOptions = new Dictionary<string, PieceType>()
@@ -166,8 +166,12 @@ namespace finalProject_2020_q3.game
 		}
 
 		public Boolean GameOver()
-		{
-			return Result == GameResult.BlackWin || Result == GameResult.WhiteWin || Result == GameResult.Draw;
+		{	
+			bool result = Result == GameResult.BlackWin || Result == GameResult.WhiteWin || Result == GameResult.Draw;
+			if (result) {
+				Console.WriteLine(ResultToString());
+			}
+			return result;
 		}
 
 		public void SetResignation() {
@@ -193,8 +197,11 @@ namespace finalProject_2020_q3.game
 
 		public void SetStatus(Color color)
         {
-			Status = GameBoard.GetGameStatus(color);
-        }
+			Status = GameBoard.GetGameStatus(color, GameBoard.Sets);
+			if (Status != GameStatus.Draw) {
+				Status = GameBoard.ValidateCheckMate(Status);
+			}
+		}
 
 		public string StatusToString() {
 			StringBuilder result = new StringBuilder();
@@ -216,5 +223,42 @@ namespace finalProject_2020_q3.game
 			}
 			return result.ToString();
 		}
+		public void SetResult()
+		{
+			if (Status == GameStatus.Draw && GameBoard.Result == GameResult.Play)
+			{
+				Result = GameResult.Play;
+			} else { 
+				Result = GameBoard.GetGameResult(Status);
+			}
+		}
+
+		public string ResultToString()
+		{
+			StringBuilder result = new StringBuilder();
+			Player playerBlack = GamePlayers.GetPlayer(Color.BLACK);
+			Player playerWhite = GamePlayers.GetPlayer(Color.WHITE);
+			Console.WriteLine(Result);
+			if (Result == GameResult.BlackWin)
+            {
+				if (Status == GameStatus.WhiteInCheckMatted) { 
+					result.Append($"{playerWhite.ToString()} is checkmated.");
+				}
+				result.Append($"\n{playerBlack.ToString()} won.");
+            }
+			if (Result == GameResult.WhiteWin)
+            {
+				if (Status == GameStatus.BlackInCheckMatted) { 
+					result.Append($"{playerBlack.ToString()} is checkmated.");
+				}
+				result.Append($"\n{playerWhite.ToString()} won.");
+            }
+			if (Result == GameResult.Draw)
+            {
+				result.Append("Draw game.");
+            }
+			return result.ToString();
+		}
 	}
+
 }
