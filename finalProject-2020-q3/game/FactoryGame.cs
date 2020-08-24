@@ -3,6 +3,7 @@ using finalProject_2020_q3.game.movement;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace finalProject_2020_q3.game
 {
@@ -12,7 +13,7 @@ namespace finalProject_2020_q3.game
         public static void CreateGame()
         {
             Console.WriteLine("********************************");
-            Console.WriteLine("*          CHECK GAME           ");
+            Console.WriteLine("*          CHECK GAME          *");
             Console.WriteLine("********************************");
             Console.WriteLine("Press any key to start");
             Console.ReadKey();
@@ -31,7 +32,8 @@ namespace finalProject_2020_q3.game
             Console.WriteLine("------------------------------");
             Console.WriteLine("-        Set players data    -");
             Console.WriteLine("------------------------------");
-            Color colorPlayer1 = GetRandomColor();
+            //Color colorPlayer1 = GetRandomColor();
+            Color colorPlayer1 = ReadColor("Select color for Player1:");
             Color colorPlayer2 = colorPlayer1 == Color.WHITE ? Color.BLACK : Color.WHITE;
             Console.WriteLine("Enter player1 name: ");
             String namePlayer1 = Console.ReadLine();
@@ -45,8 +47,35 @@ namespace finalProject_2020_q3.game
             Console.WriteLine(player2.ToString());
             CurrentGame.GamePlayers.AddPlayers(player1, player2);
             CurrentGame.Turn = CurrentGame.GamePlayers[0];
+            ReadTopColor();
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
+        }
+
+        private static void ReadTopColor()
+        {
+            Color topColor = ReadColor("Select color on top of board:");
+            CurrentGame.SetTopColor(topColor);
+        }
+
+        private static Color ReadColor(string selectMessage)
+        {
+            string optionsPattern = @"^[1-2]$";
+            Dictionary<string, Color> colorOptions = new Dictionary<string, Color>()
+            {
+                { "1", Color.WHITE},
+                { "2", Color.BLACK},
+            };
+            Console.WriteLine(selectMessage);
+            Console.WriteLine("1. White");
+            Console.WriteLine("2. Black");
+            string selectedOption = Console.ReadLine();
+            while (!Regex.IsMatch(selectedOption, optionsPattern))
+            {
+                Console.WriteLine("Bad command try again");
+                selectedOption = Console.ReadLine();
+            }
+            return colorOptions[selectedOption];
         }
 
         public static Color GetRandomColor() {

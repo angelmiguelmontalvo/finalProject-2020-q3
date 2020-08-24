@@ -3,8 +3,9 @@ using System.Linq;
 
 namespace finalProject_2020_q3.code
 {
-    public class King : Piece, ICastling
+    public class King : Piece, ICastling, IMoved
     {
+        private bool Moved { get; set; } = false;
         public King(Color color) : base(color) { }
 
         public void Castling(Rook rook, King king)
@@ -48,6 +49,16 @@ namespace finalProject_2020_q3.code
         {
             string result = Color == Color.WHITE ? $"KW " : $" KB";
             return result;
+        }
+
+        public bool IsAbleTocast()
+        {
+            return !Moved;
+        }
+
+        public void PiceMoved(bool move)
+        {
+            this.Moved = move;
         }
     }
 }

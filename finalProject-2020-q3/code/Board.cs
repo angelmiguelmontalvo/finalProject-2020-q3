@@ -27,7 +27,7 @@ namespace finalProject_2020_q3.code
             this.Result = GameResult.Play;
             InitPieces();
         }
-        private void InitPieces()
+        public void InitPieces()
         {
             FillBoardCells();
             FillSet(TopColor, true);
@@ -49,13 +49,17 @@ namespace finalProject_2020_q3.code
             int majorsPosition;
             if (isTop)
             {
-                pawnsPosition = 6;
-                majorsPosition = 7;
+                //pawnsPosition = 6;
+                //majorsPosition = 7;
+                pawnsPosition = 1;
+                majorsPosition = 0;
             }
             else
             {
-                pawnsPosition = 1;
-                majorsPosition = 0;
+                //pawnsPosition = 1;
+                //majorsPosition = 0;
+                pawnsPosition = 6;
+                majorsPosition = 7;
             }
 
             for (int i = 0; i < 8; i++)
@@ -114,6 +118,10 @@ namespace finalProject_2020_q3.code
                     Rollback(source, target, sourcePiece, target.piece, sets);
                     return false;
                 }
+            }
+            if (sourcePiece is IMoved)
+            {
+                ((IMoved)sourcePiece).PiceMoved(true);
             }
             return true;
         }
@@ -385,6 +393,25 @@ namespace finalProject_2020_q3.code
                 }
             }
             return checkStatus;
+        }
+        public bool Castling(Cell king, Cell rook )
+        {
+            if(rook.piece is ICastling && king.piece is ICastling)
+            {
+                Rook rk = (Rook)rook.piece;
+                King kn = (King)king.piece;
+                if (rk.IsAbleTocast() && kn.IsAbleTocast() && rook.GetColumn() == "h")
+                {
+                    if (rook.Row == king.Row && this.Sets[rook.Row, 5].IsEmpty() && this.Sets[rook.Row, 6].IsEmpty())
+                    {
+                        ApplyMovement(king, this.Sets[rook.Row, 6]);
+                        ApplyMovement(rook, this.Sets[rook.Row, 5]);
+                        return true;
+                    }
+                }
+                
+            }
+            return false;
         }
     }
 }
