@@ -98,6 +98,7 @@ namespace finalProject_2020_q3.code
 
         public bool ApplyMovementSet(Cell source, Cell target, Cell[,] sets, PieceType promotedType = PieceType.NONE)
         {
+            EnPassant(source, target);
             Piece sourcePiece = RemovePiece(source, sets);
             if (sourcePiece is null)
             {
@@ -128,6 +129,25 @@ namespace finalProject_2020_q3.code
 
         public bool AddPiece(Piece piece, Cell cell, Cell[,] sets) {
             return Add(piece, cell.GetRow(), cell.GetColumn(), sets);
+        }
+        private void EnPassant(Cell source, Cell target)
+        {
+            Piece sourcePiece = source.piece;
+            if (sourcePiece is Pawn)
+            {
+                Pawn sourcePawn = sourcePiece as Pawn;
+                CellList passantCells = sourcePawn.EnPassantMovements(this.Sets, source.Row, source.Column);
+                foreach (var passantCell in passantCells)
+                {
+                    if (passantCell.Column == target.Column)
+                    {
+                        int columnToRemove = passantCell.Column;
+                        int rowToRemove = sourcePawn.IsTop? passantCell.Row - 1: passantCell.Row + 1;
+                        Remove(Cell.rowsString[rowToRemove], Cell.columnsString[columnToRemove], this.Sets);
+                        break;
+                    }
+                }
+            }
         }
 
         public bool Add(Piece piece, string row, string column, Cell[,] sets)
