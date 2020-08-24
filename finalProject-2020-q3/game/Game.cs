@@ -280,7 +280,7 @@ namespace finalProject_2020_q3.game
 		}
 		public void Castling()
 		{
-			Cell king = GameBoard.GetKingCell(Turn.PlayerColor);
+			Cell king = GameBoard.GetKingCell(Turn.PlayerColor, GameBoard.Sets);
 			bool res = GameBoard.Castling(king);
 			string message;
             if (res){
