@@ -17,10 +17,11 @@ namespace finalProject_2020_q3.game
 		public Players GamePlayers = new Players();
 		public Player Turn { set; get; }
 		public GameStatus Status { set; get; }
-		public GameResult Result { get; private set; }
+		public GameResult Result { get; set; }
 		public Movements GameMovements = new Movements();
 		public Board GameBoard = new Board();
 		public Drawer GameDrawer { get; set; }
+		private Color TopColor;
 		public Game()
 		{
 			Result = GameResult.Play;
@@ -31,6 +32,7 @@ namespace finalProject_2020_q3.game
 
 		public void SetTopColor(Color topColor)
 		{
+			this.TopColor = topColor;
 			this.GameBoard.TopColor = topColor;
 			this.GameBoard.InitPieces();
 		}
@@ -229,6 +231,7 @@ namespace finalProject_2020_q3.game
 			}
 			return result.ToString();
 		}
+
 		public void SetResult()
 		{
 			if (Status == GameStatus.Draw && GameBoard.Result == GameResult.Play)
@@ -246,24 +249,34 @@ namespace finalProject_2020_q3.game
 			Player playerWhite = GamePlayers.GetPlayer(Color.WHITE);
 			Console.WriteLine(Result);
 			if (Result == GameResult.BlackWin)
-            {
-				if (Status == GameStatus.WhiteInCheckMatted) { 
+			{
+				if (Status == GameStatus.WhiteInCheckMatted) {
 					result.Append($"{playerWhite.ToString()} is checkmated.");
 				}
 				result.Append($"\n{playerBlack.ToString()} won.");
-            }
+			}
 			if (Result == GameResult.WhiteWin)
-            {
-				if (Status == GameStatus.BlackInCheckMatted) { 
+			{
+				if (Status == GameStatus.BlackInCheckMatted) {
 					result.Append($"{playerBlack.ToString()} is checkmated.");
 				}
 				result.Append($"\n{playerWhite.ToString()} won.");
-            }
+			}
 			if (Result == GameResult.Draw)
-            {
+			{
 				result.Append("Draw game.");
-            }
+			}
 			return result.ToString();
+		}
+		public void Reset()
+		{
+			Result = GameResult.Play;
+			Status = GameStatus.Draw;
+			GameMovements = new Movements();
+			GameBoard = new Board();
+			GameDrawer = new Drawer(GameBoard);
+			SetFirstTurn();
+			SetTopColor(this.TopColor);
 		}
 	}
 
