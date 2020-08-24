@@ -5,7 +5,7 @@ namespace finalProject_2020_q3.game
 { 
 	public class Player
 	{
-		String PlayerName { set; get; }
+		public string PlayerName { set; get; }
 		public Color PlayerColor;
 		public int PlayerTurn { set; get; }
 		public Player(string name, Color color, int index)

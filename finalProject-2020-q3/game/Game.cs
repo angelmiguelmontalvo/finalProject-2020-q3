@@ -17,7 +17,7 @@ namespace finalProject_2020_q3.game
 		public Players GamePlayers = new Players();
 		public Player Turn { set; get; }
 		public GameStatus Status { set; get; }
-		public GameResult Result { get; private set; }
+		public GameResult Result { get; set; }
 		public Movements GameMovements = new Movements();
 		public Board GameBoard = new Board();
 		public Drawer GameDrawer { get; set; }

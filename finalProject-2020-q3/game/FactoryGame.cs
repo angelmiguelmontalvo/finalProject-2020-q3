@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace finalProject_2020_q3.game
 {
@@ -69,12 +70,7 @@ namespace finalProject_2020_q3.game
             Console.WriteLine(selectMessage);
             Console.WriteLine("1. White");
             Console.WriteLine("2. Black");
-            string selectedOption = Console.ReadLine();
-            while (!Regex.IsMatch(selectedOption, optionsPattern))
-            {
-                Console.WriteLine("Bad command try again");
-                selectedOption = Console.ReadLine();
-            }
+            string selectedOption = ReadValidOption(optionsPattern);
             return colorOptions[selectedOption];
         }
 
@@ -99,7 +95,8 @@ namespace finalProject_2020_q3.game
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
                 Console.WriteLine("3. More time");
-                Console.WriteLine("4. Restart game");
+                Console.WriteLine("4. Request Draw");
+                Console.WriteLine("5. Restart game");
                 string option = Console.ReadLine();
                 switch (option)
                 {
@@ -124,6 +121,9 @@ namespace finalProject_2020_q3.game
                         Console.ReadKey();
                         break;
                     case "4":
+                        RequestDraw();
+                        break;
+                    case "5":
                         CurrentGame.Reset();
                         break;
                     default:
@@ -133,15 +133,14 @@ namespace finalProject_2020_q3.game
             }
             if (CurrentGame.Result == GameResult.Draw) {
                 Console.Clear();
-                Console.WriteLine("*************DRAW GAME ************");
                 CurrentGame.GameDrawer.DrawBoard();
+                Console.WriteLine("************* DRAW GAME ************");
             } else 
             {
                 Console.WriteLine(CurrentGame.ResultToString());
                 CurrentGame.GameDrawer.DrawBoard();
             }
         }
-
         public static Boolean ReadCommand() {
             string command = CurrentGame.ReadCommand();
             if (CurrentGame.IsMovementCommand(command))
@@ -167,6 +166,35 @@ namespace finalProject_2020_q3.game
                 return false;
             }
             return false;
+        }
+
+        private static void RequestDraw()
+        {
+            string optionsPattern = @"^[yn]$";
+            Console.WriteLine($"Player {CurrentGame.Turn.PlayerName} is requesting finishing the game in Draw\n" +
+                $"{CurrentGame.GetNextPlayer().PlayerName} do you agree? (y/n)");
+            string selectedOption = ReadValidOption(optionsPattern);
+            switch (selectedOption)
+            {
+                case "y":
+                    CurrentGame.Result = GameResult.Draw;
+                    break;
+                case "n":
+                    Console.WriteLine($"Player {CurrentGame.GetNextPlayer().PlayerName} has rejected the draw request.");
+                    Thread.Sleep(3000);
+                    break;
+            }
+        }
+
+        private static string ReadValidOption(string validPattern)
+        {
+            string selectedOption = Console.ReadLine();
+            while (!Regex.IsMatch(selectedOption, validPattern))
+            {
+                Console.WriteLine("Bad command try again");
+                selectedOption = Console.ReadLine();
+            }
+            return selectedOption;
         }
     }
 }
