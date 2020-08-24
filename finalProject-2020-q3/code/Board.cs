@@ -127,8 +127,8 @@ namespace finalProject_2020_q3.code
             return true;
         }
 
-        public bool AddPiece(Piece piece, Cell cell, Cell[,] sets) {
-            return Add(piece, cell.GetRow(), cell.GetColumn(), sets);
+        public bool AddPiece(Piece piece, Cell cell, Cell[,] sets) { 
+             return Add(piece, cell.GetRow(), cell.GetColumn(), sets);
         }
         private void EnPassant(Cell source, Cell target)
         {
@@ -249,7 +249,7 @@ namespace finalProject_2020_q3.code
                 {
                     if (!(Sets[i, j].piece is null) && Sets[i, j].piece.Color == color)
                     {
-                        CellList attackCells = Sets[i, j].piece.AttackMovements(Sets, Sets[i, j].Row, Sets[i, j].Column);
+                        CellList attackCells = Sets[i, j].piece.ValidMovements(Sets, Sets[i, j].Row, Sets[i, j].Column);
                         foreach (Cell cell in attackCells)
                         {
                             cellsToAtack.Add(cell);
@@ -264,20 +264,19 @@ namespace finalProject_2020_q3.code
         {
             GameStatus status = GameStatus.Draw;
             CellList cellsToAtack = new CellList();
-            List<Cell> kingUnderAttack;
+            bool kingUnderAttack = false;
             if (color == Color.WHITE)
             {
                 Cell WhiteKingCell = GetKingCell(color, Sets);
                 cellsToAtack = GetAllCellAtack(Color.BLACK, Sets);
-                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(WhiteKingCell)).ToList();
-                status = kingUnderAttack.Count > 0 ? GameStatus.WhiteInCheck : GameStatus.Draw;
-            }
-            if (color == Color.BLACK)
+                kingUnderAttack = cellsToAtack.Any(cell => cell.CompareCell(WhiteKingCell));
+                status = kingUnderAttack == true ? GameStatus.BlackInCheck : GameStatus.Draw;
+            } else if (color == Color.BLACK)
             {
                 Cell BlackKingCell = GetKingCell(color, Sets);
                 cellsToAtack = GetAllCellAtack(Color.WHITE, Sets);
-                kingUnderAttack = cellsToAtack.Where(cell => cell.CompareCell(BlackKingCell)).ToList();
-                status = kingUnderAttack.Count > 0 ? GameStatus.BlackInCheck : GameStatus.Draw;
+                kingUnderAttack = cellsToAtack.Any(cell => cell.CompareCell(BlackKingCell));
+                status = kingUnderAttack == true ? GameStatus.BlackInCheck : GameStatus.Draw;
             }
             return status;
         }
@@ -326,7 +325,7 @@ namespace finalProject_2020_q3.code
         {
             GameStatus checkStatus = status;
             CloneSets = CloneCells(sets);
-            Color color = status == GameStatus.WhiteInCheck ? Color.WHITE : Color.BLACK;
+            Color color = status == GameStatus.WhiteInCheck ? Color.BLACK : Color.WHITE;
             for (var i = 0; i < 8; i++)
             {
                 if (checkStatus == GameStatus.Draw)
@@ -356,7 +355,6 @@ namespace finalProject_2020_q3.code
                     Cell cloneCell = new Cell(i,j);
                     cloneCell.piece = sets[i, j].piece;
                     CloneSets[i, j] = cloneCell;
-                    Console.WriteLine($"{CloneSets[i, j].ToString()}  {CloneSets[i, j].piece} {i} {j}");
                 }
             }
             return CloneSets;
@@ -389,16 +387,14 @@ namespace finalProject_2020_q3.code
                 foreach (Cell target in validMovements)
                 {
                     bool posibleMove = ApplyMovementSet(cell, target, sets);
-                    Console.WriteLine(cell.ToString());
-                    Console.WriteLine(target.ToString());
-                    if (posibleMove) {
+                    if (posibleMove)
+                    {
                         Rollback(cell, target, cell.piece, target.piece, sets);
                         checkStatus = GameStatus.Draw;
                         break;
                     }
                 }
-            }
-            if (status == GameStatus.WhiteInCheck && cell.piece.Color == color)
+            } else if (status == GameStatus.WhiteInCheck && cell.piece.Color == color)
             {
                 CellList validMovements = cell.GetValidMovements(sets);
                 foreach (Cell target in validMovements)

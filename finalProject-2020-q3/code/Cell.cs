@@ -107,7 +107,7 @@ namespace finalProject_2020_q3.code
 
         public bool CompareCell(Cell cell)
         {
-            return !(cell is null) && cell.Row == Row && cell.Column == Column;
+            return string.Equals(cell.ToString(), ToString(), StringComparison.OrdinalIgnoreCase);
         }
     }
 }
