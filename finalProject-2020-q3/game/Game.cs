@@ -232,6 +232,7 @@ namespace finalProject_2020_q3.game
 			return result.ToString();
 		}
 
+<<<<<<< HEAD
 		public void SetResult()
 		{
 			if (Status == GameStatus.Draw && GameBoard.Result == GameResult.Play)
@@ -277,6 +278,24 @@ namespace finalProject_2020_q3.game
 			GameDrawer = new Drawer(GameBoard);
 			SetFirstTurn();
 			SetTopColor(this.TopColor);
+=======
+		public void Castling()
+		{
+			Cell king = GameBoard.GetKingCell(Turn.PlayerColor);
+			bool res = GameBoard.Castling(king);
+			string message;
+            if (res){
+				SetNextPlayer();
+				message ="** Castled Sucess **";
+			}
+            else
+            {
+				message = "** No able to castle **";
+			}
+			Console.WriteLine("--------------------------------");
+			Console.WriteLine(message);
+			Console.WriteLine("--------------------------------");
+>>>>>>> ec96524... feature - castling interface
 		}
 	}
 

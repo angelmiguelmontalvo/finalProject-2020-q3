@@ -94,9 +94,15 @@ namespace finalProject_2020_q3.game
                 Console.WriteLine($"Turn of {CurrentGame.Turn.ToString()}");
                 Console.WriteLine("1. Set movement");
                 Console.WriteLine("2. Resignation");
+<<<<<<< HEAD
                 Console.WriteLine("3. More time");
                 Console.WriteLine("4. Request Draw");
                 Console.WriteLine("5. Restart game");
+=======
+                Console.WriteLine("3. Castling");
+                Console.WriteLine("4. More time");
+
+>>>>>>> ec96524... feature - castling interface
                 string option = Console.ReadLine();
                 switch (option)
                 {
@@ -117,6 +123,11 @@ namespace finalProject_2020_q3.game
                         CurrentGame.SetResignation();
                         break;
                     case "3":
+                        CurrentGame.Castling();
+                        Console.ReadKey();
+
+                        break;
+                    case "4":
                         Console.WriteLine("Waiting....");
                         Console.ReadKey();
                         break;
